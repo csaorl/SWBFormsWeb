@@ -1,0 +1,532 @@
+{
+  "DataSource": [
+    {
+      "_id": "_suri:InfotecAdmin:DataSource:User",
+      "scls": "User",
+      "id": "User",
+      "description": "Usuarios",
+      "displayField": "fullname",
+      "backend": true,
+      "frontend": true,
+      "created": "2018-12-27T23:06:31.142Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSource:Log",
+      "scls": "Log",
+      "id": "Log",
+      "description": "Log",
+      "backend": true,
+      "frontend": true,
+      "created": "2019-01-02T19:22:11.878Z",
+      "creator": "softjei@gmail.com"
+    }
+  ],
+  "DataSourceFields": [
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c255b18a190302ef59894e4",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "email",
+      "title": "Correo electrónico",
+      "type": "string",
+      "required": true,
+      "order": 1,
+      "created": "2018-12-27T23:07:04.903Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c255e17a1902b6efb5e6bd3",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "password",
+      "title": "Password",
+      "type": "password",
+      "required": true,
+      "order": 2,
+      "created": "2018-12-27T23:19:51.649Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c256e0aa1902b6efb5e6bd4",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "fullname",
+      "title": "Nombre Completo",
+      "type": "string",
+      "order": 3,
+      "required": true,
+      "created": "2018-12-28T00:27:54.553Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c256e20a1902b6efb5e6bd5",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "roles",
+      "title": "Roles",
+      "type": "select",
+      "created": "2018-12-28T00:28:16.789Z",
+      "creator": "softjei@gmail.com",
+      "order": 5,
+      "updated": "2019-01-01T19:09:48.343Z",
+      "updater": "softjei@gmail.com",
+      "required": false
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c256e7fa1902b6efb5e6bd7",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "created",
+      "title": "Fecha de Creación",
+      "type": "date",
+      "created": "2018-12-28T00:29:51.007Z",
+      "creator": "softjei@gmail.com",
+      "order": 10,
+      "updated": "2018-12-28T00:30:57.648Z",
+      "updater": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c256efda1902b6efb5e6bdc",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "creator",
+      "title": "Usuario Creador",
+      "type": "string",
+      "created": "2018-12-28T00:31:57.294Z",
+      "creator": "softjei@gmail.com",
+      "order": 11,
+      "updated": "2018-12-28T00:33:24.240Z",
+      "updater": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c256f3ba1902b6efb5e6bdf",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "updated",
+      "title": "Fecha de Modificación",
+      "type": "date",
+      "created": "2018-12-28T00:32:59.907Z",
+      "creator": "softjei@gmail.com",
+      "order": 12,
+      "updated": "2018-12-28T00:33:27.183Z",
+      "updater": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c256f6ca1902b6efb5e6be2",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "updater",
+      "title": "Usuario Modificador",
+      "type": "string",
+      "order": 13,
+      "created": "2018-12-28T00:33:48.029Z",
+      "creator": "softjei@gmail.com",
+      "updated": "2018-12-28T00:33:51.175Z",
+      "updater": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c2bbaf8cb2ebcdad2887896",
+      "ds": "_suri:InfotecAdmin:DataSource:User",
+      "name": "area",
+      "title": "Area",
+      "type": "string",
+      "order": 4,
+      "created": "2019-01-01T19:09:44.571Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c2d0f78cb2e6b4a59b51c5e",
+      "ds": "_suri:InfotecAdmin:DataSource:Log",
+      "name": "user",
+      "title": "Usuario",
+      "type": "string",
+      "order": 10,
+      "created": "2019-01-02T19:22:32.475Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c2d0f87cb2e6b4a59b51c5f",
+      "ds": "_suri:InfotecAdmin:DataSource:Log",
+      "name": "dataSource",
+      "title": "DataSource",
+      "type": "string",
+      "order": 20,
+      "created": "2019-01-02T19:22:47.103Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c2d0f93cb2e6b4a59b51c60",
+      "ds": "_suri:InfotecAdmin:DataSource:Log",
+      "name": "action",
+      "title": "Accion",
+      "type": "string",
+      "order": 30,
+      "created": "2019-01-02T19:22:59.493Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c2d0fabcb2e6b4a59b51c61",
+      "ds": "_suri:InfotecAdmin:DataSource:Log",
+      "name": "data",
+      "title": "Datos",
+      "type": "string",
+      "order": 40,
+      "created": "2019-01-02T19:23:23.354Z",
+      "creator": "softjei@gmail.com",
+      "updated": "2019-01-02T19:54:05.233Z",
+      "updater": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFields:5c2d0fcecb2e6b4a59b51c62",
+      "ds": "_suri:InfotecAdmin:DataSource:Log",
+      "name": "date",
+      "title": "Fecha",
+      "type": "string",
+      "order": 50,
+      "created": "2019-01-02T19:23:58.935Z",
+      "creator": "softjei@gmail.com",
+      "updated": "2019-01-02T19:53:03.029Z",
+      "updater": "softjei@gmail.com"
+    }
+  ],
+  "DataSourceFieldsExt": [
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c255df8a1902b6efb5e6bd2",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c255b18a190302ef59894e4",
+      "type": "string",
+      "att": "validators",
+      "value": "email"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256e41a1902b6efb5e6bd6",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256e20a1902b6efb5e6bd5",
+      "type": "object",
+      "att": "valueMap",
+      "value": "roles"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256eaaa1902b6efb5e6bd8",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256e20a1902b6efb5e6bd5",
+      "type": "boolean",
+      "att": "multiple",
+      "value": "true"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256eaea1902b6efb5e6bd9",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256e20a1902b6efb5e6bd5",
+      "type": "boolean",
+      "att": "redrawOnChange",
+      "value": "true"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256edba1902b6efb5e6bda",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256e7fa1902b6efb5e6bd7",
+      "type": "string",
+      "att": "editorType",
+      "value": "StaticTextItem"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256edfa1902b6efb5e6bdb",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256e7fa1902b6efb5e6bd7",
+      "type": "boolean",
+      "att": "canEdit",
+      "value": "false"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256f15a1902b6efb5e6bdd",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256efda1902b6efb5e6bdc",
+      "type": "string",
+      "att": "editorType",
+      "value": "StaticTextItem"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256f1aa1902b6efb5e6bde",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256efda1902b6efb5e6bdc",
+      "type": "boolean",
+      "att": "canEdit",
+      "value": "false"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256f46a1902b6efb5e6be0",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256f3ba1902b6efb5e6bdf",
+      "type": "string",
+      "att": "editorType",
+      "value": "StaticTextItem"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256f4aa1902b6efb5e6be1",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256f3ba1902b6efb5e6bdf",
+      "type": "boolean",
+      "att": "canEdit",
+      "value": "false"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256f74a1902b6efb5e6be3",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256f6ca1902b6efb5e6be2",
+      "type": "string",
+      "att": "editorType",
+      "value": "StaticTextItem"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:DataSourceFieldsExt:5c256f7aa1902b6efb5e6be4",
+      "dsfield": "_suri:InfotecAdmin:DataSourceFields:5c256f6ca1902b6efb5e6be2",
+      "type": "boolean",
+      "att": "canEdit",
+      "value": "false"
+    }
+  ],
+  "ValueMapValues": [
+    {
+      "_id": "_suri:InfotecAdmin:ValueMapValues:prog",
+      "id": "prog",
+      "value": "Programmer"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:ValueMapValues:su",
+      "id": "su",
+      "value": "Super User"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:ValueMapValues:admin",
+      "id": "admin",
+      "value": "Admin"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:ValueMapValues:user",
+      "id": "user",
+      "value": "User"
+    }
+  ],
+  "ValueMap": [
+    {
+      "_id": "_suri:InfotecAdmin:ValueMap:roles",
+      "id": "roles",
+      "created": "2019-01-01",
+      "creator": "softjei@gmail.com",
+      "updated": "2019-01-07T17:03:00.503Z",
+      "updater": "softjei@gmail.com",
+      "values": [
+        "_suri:InfotecAdmin:ValueMapValues:prog",
+        "_suri:InfotecAdmin:ValueMapValues:su",
+        "_suri:InfotecAdmin:ValueMapValues:admin",
+        "_suri:InfotecAdmin:ValueMapValues:ap",
+        "_suri:InfotecAdmin:ValueMapValues:user"
+      ]
+    }
+  ],
+  "DataService": [
+    {
+      "_id": "_suri:InfotecAdmin:DataService:LogService",
+      "id": "LogService",
+      "created": "2019-01-02",
+      "creator": "softjei@gmail.com",
+      "service": "function(request, response, dataSource, action){\n  if(dataSource!==\"Log\")\n  {\n\n    var data={\n      source:this.source,\n      //user:this.user.login,\n      dataSource:dataSource,\n      action:action,\n      data:JSON.stringify(request.data),\n      date:new java.util.Date()\n    };\n    if(this.user)\n    {\n      data.user=this.user.email;\n      data.userIp=this.user.ip;\n    }\n    this.getDataSource(\"Log\").addObj(data);\n  }\n}",
+      "dataSources": [
+        "*"
+      ],
+      "actions": [
+        "add",
+        "update",
+        "remove"
+      ],
+      "updated": "2019-01-02T19:55:59.813Z",
+      "updater": "softjei@gmail.com"
+    }
+  ],
+  "DataProcessor": [
+  ],
+  "PageProps": [
+    {
+      "_id": "_suri:InfotecAdmin:PageProps:5c25707ea1902b6efb5e6be6",
+      "prop": [
+        "User.email",
+        "User.fullname",
+        "User.password",
+        "User.roles"
+      ],
+      "type": "string",
+      "att": "width",
+      "value": "100%"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:PageProps:5c2d1673cb2e6b4a59b51c83",
+      "prop": [
+        "Log.date"
+      ],
+      "type": "string",
+      "att": "width",
+      "value": "130"
+    }
+  ],
+  "Page": [
+    {
+      "_id": "_suri:InfotecAdmin:Page:users",
+      "id": "users",
+      "name": "Usuarios",
+      "parentId": "_suri:InfotecAdmin:Page:admin",
+      "order": 10,
+      "smallName": "Administración de Usuarios",
+      "type": "sc_grid_detail",
+      "gridExtProps": null,
+      "formExtProps": [
+        "_suri:InfotecAdmin:PageProps:5c25707ea1902b6efb5e6be6"
+      ],
+      "roles_view": [
+        "prog",
+        "su",
+        "admin"
+      ],
+      "ds": "User",
+      "created": "2018-12-27",
+      "creator": "softjei@gmail.com",
+      "roles_add": [
+        "prog",
+        "su",
+        "admin"
+      ],
+      "roles_update": [
+        "prog",
+        "su",
+        "admin"
+      ],
+      "roles_remove": [
+        "prog",
+        "su",
+        "admin"
+      ],
+      "updated": "2019-01-07T19:16:34.309Z",
+      "updater": "softjei@gmail.com",
+      "iconClass": "fa fa-users",
+      "path": null,
+      "gd_conf": null,
+      "gridProps": [
+        "User.email",
+        "User.password",
+        "User.fullname",
+        "User.roles"
+      ],
+      "gridAddiJS": null,
+      "formProps": [
+        "User.email",
+        "User.password",
+        "User.fullname",
+        "User.roles",
+        "User.created",
+        "User.creator",
+        "User.updated",
+        "User.updater"
+      ],
+      "formAddiJS": null
+    },
+    {
+      "_id": "_suri:InfotecAdmin:Page:menu",
+      "id": "menu",
+      "name": "Menu",
+      "order": 10,
+      "type": "head",
+      "roles_view": [
+        "prog",
+        "su",
+        "admin",
+        "user"
+      ],
+      "created": "2018-12-27",
+      "creator": "softjei@gmail.com",
+      "updated": "2018-12-27T23:02:42.981Z",
+      "updater": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:Page:admin",
+      "id": "admin",
+      "name": "Administración",
+      "parentId": "_suri:InfotecAdmin:Page:menu",
+      "smallName": "Administración del Sistema",
+      "order": 10,
+      "type": "group_menu",
+      "roles_view": [
+        "prog",
+        "su",
+        "admin"
+      ],
+      "created": "2018-12-27T23:03:38.492Z",
+      "creator": "softjei@gmail.com"
+    },
+    {
+      "_id": "_suri:InfotecAdmin:Page:catalogs",
+      "id": "catalogs",
+      "name": "Catálogos",
+      "parentId": "_suri:InfotecAdmin:Page:admin",
+      "order": 90,
+      "type": "group_menu",
+      "smallName": null,
+      "iconClass": null,
+      "roles_view": [
+        "prog",
+        "su",
+        "admin"
+      ],
+      "gridAddiJS": null,
+      "formAddiJS": null,
+      "created": "2019-01-01",
+      "creator": "softjei@gmail.com",
+      "updated": "2019-01-07T13:40:25.583Z",
+      "updater": "softjei@gmail.com",
+      "path": null,
+      "ds": null,
+      "gd_conf": null,
+      "gridProps": null,
+      "gridExtProps": null,
+      "formProps": null,
+      "formExtProps": null,
+      "roles_add": null,
+      "roles_update": null,
+      "roles_remove": null
+    },
+    {
+      "_id": "_suri:InfotecAdmin:Page:bitacora",
+      "id": "bitacora",
+      "name": "Bitácora de Cambios",
+      "parentId": "_suri:InfotecAdmin:Page:admin",
+      "order": 100,
+      "type": "sc_grid",
+      "smallName": null,
+      "iconClass": null,
+      "roles_view": [
+        "prog",
+        "su"
+      ],
+      "ds": "Log",
+      "gridExtProps": [
+        "_suri:InfotecAdmin:PageProps:5c2d1673cb2e6b4a59b51c83"
+      ],
+      "gridAddiJS": null,
+      "roles_add": null,
+      "roles_update": null,
+      "roles_remove": [
+        "prog"
+      ],
+      "gridProps": [
+        "Log.user",
+        "Log.dataSource",
+        "Log.action",
+        "Log.data",
+        "Log.date"
+      ],
+      "created": "2019-01-02",
+      "creator": "softjei@gmail.com",
+      "updated": "2019-01-02T19:54:42.152Z",
+      "updater": "softjei@gmail.com"
+    }
+  ],
+  "User": [
+    {
+      "_id": "_suri:InfotecAdmin:User:5c2555e7a190302ef59894e3",
+      "fullname": "Javier Solis Gonzalez",
+      "email": "softjei@gmail.com",
+      "password": "[SHA-512]6dbea242f7269d227c821ae41162349ca2f24d4aa4730c4ec5f2e95721df4736a3247567c771d6faa9b34684568accbfabd2040f855c4cea6eee9075826d9410",
+      "roles": [
+        "prog",
+        "su",
+        "admin",
+        "user"
+      ],
+      "created": "2018-12-27",
+      "creator": null,
+      "updated": "2018-12-28T00:39:25.557Z",
+      "updater": "softjei@gmail.com"
+    }
+  ]
+}
