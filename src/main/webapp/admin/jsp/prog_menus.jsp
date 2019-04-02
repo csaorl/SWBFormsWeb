@@ -110,6 +110,11 @@
                 canReorderRecords: true,
                 canAcceptDroppedRecords: true,
                 
+                sortField: "order",
+                //sortDirection: "descending",
+                
+                appImgDir:"/admin/images/",
+                
                 showRecordComponents: true,
                 showRecordComponentsByCell: true,
                 //recordComponentPoolingMode: "recycle",
@@ -122,6 +127,7 @@
                     {name: "iconClass"},
                     {name: "order", width:70},
                     {name: "roles_view"},
+                    {name: "status"},
                     //{name: "roles_add"},
                     //{name: "roles_update"},
                     //{name: "roles_remove"},
@@ -132,6 +138,13 @@
                     //{name: "updater"},
                     {name: "edit", title: " ", width:32, canEdit:false, formatCellValue: function (value) {return " ";}},
                 ],
+                
+                dataProperties:{
+                    loadDataOnDemand:false,
+                    dataArrived:function (parentNode) {
+                        this.openAll();
+                    }
+                },
 
                 createRecordComponent: function (record, colNum) {
                     var fieldName = this.getFieldName(colNum);
@@ -218,8 +231,10 @@
                     {name: "order", width:70},
                     {name: "urlParams", width:"100%"},
                     {name: "type", redrawOnChange:true},
+                    {name: "icon"},
                     {name: "iconClass"},
                     {name: "roles_view", width:"100%"},
+                    {name: "status"},                    
                     {name: "path", width:"100%", showIf:"form.hasType(['ajax','iframe','url'])"},
                     {name: "ds", showIf:"form.hasType('sc')"},
                     {name: "gd_conf", showIf:"form.hasType('sc_grid_detail')"},

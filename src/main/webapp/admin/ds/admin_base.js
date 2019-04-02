@@ -10,10 +10,6 @@ var type_pages = {
     "sc_grid": "SC Grid",
     "sc_grid_detail": "SC Grid Detail",
     "sc_form": "SC Form",
-    //"subt_ajax_content": "Subtab Ajax Content",
-    //"subt_iframe_content": "Subtab IFrame Content",
-    //"subt_sc_grid": "Subtab SC Grid",
-    //"subt_sc_form": "Subtab SC Form"
 };
 
 //Tipos de propiedades o Fields
@@ -372,7 +368,9 @@ eng.dataSources["Page"] = {
         {name: "name", title: "Nombre", type: "string"},
         {name: "parentId", title: "Padre", stype: "select", dataSource:"Page", foreignKey:"Page._id",  rootValue_:"home"},
         {name: "smallName", title: "Sub Nombre", type: "string"},
+        {name: "status", title: "Estatus", type: "select", valueMap:{active:"Activa",hidden:"Oculta",disabled:"Inactiva"}},        
         {name: "type", title: "Tipo", type: "select", valueMap:type_pages},
+        {name: "icon", title: "Icon", type: "string"},
         {name: "iconClass", title: "Clase del Icono", type: "string"},
         {name: "order", title: "Orden", type:"integer", canEdit:"true", hidden:"false"},
         {name: "urlParams", title: "Extra URLParams", type:"string", canEdit:"true", hidden:"false"},
@@ -425,6 +423,7 @@ eng.dataProcessors["PageProcessor"] = {
             }
         }
         request.data=ndata;
+        if(request.data.type)request.data.icon="/admin/images/"+request.data.type+".png";
         //print("PageProcessor end:"+request.data);
         return request;
     },
