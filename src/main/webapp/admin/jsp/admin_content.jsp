@@ -2,7 +2,10 @@
     Document   : prog_menu
     Created on : 10-feb-2018, 19:57:02
     Author     : javiersolis
---%><%@page import="org.semanticwb.datamanager.script.ScriptObject"%>
+--%><%@page import="java.net.URLEncoder"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.util.Map"%>
+<%@page import="org.semanticwb.datamanager.script.ScriptObject"%>
 <%@page import="java.io.IOException"%><%@page import="java.util.Iterator"%><%@page import="org.semanticwb.datamanager.*"%><%@page contentType="text/html" pageEncoding="UTF-8"%><%!
 
     public String parseScript(String txt, HttpServletRequest request, DataObject user)
@@ -14,7 +17,7 @@
         {
             String s=(String)it.next();
             String k=s.trim();
-            if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("'") && k.endsWith("'")))k=k.substring(1,k.length()-1);
+            if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("\"") && k.endsWith("\"")))k=k.substring(1,k.length()-1);
             String replace=request.getParameter(k);
             if(replace!=null)txt=txt.replace("{$getParameter:"+s+"}", replace);
         }
@@ -24,7 +27,7 @@
         {
             String s=(String)it.next();
             String k=s.trim();
-            if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("'") && k.endsWith("'")))k=k.substring(1,k.length()-1);
+            if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("\"") && k.endsWith("\"")))k=k.substring(1,k.length()-1);
             String replace=user.getString(k);
             txt=txt.replace("{$user:"+s+"}", replace);
         }
@@ -166,6 +169,29 @@
     String id=request.getParameter("id");    
     String rid=request.getParameter("rid");    
     
+    //Find extra parameters
+    Map<String,String[]> pmap=request.getParameterMap();
+    pmap.remove("pid");
+    pmap.remove("iframe");
+    pmap.remove("aiframe");
+    pmap.remove("detail");
+    pmap.remove("id");
+    pmap.remove("rid");
+    StringBuilder extp=new StringBuilder();
+    Iterator<String> eit=pmap.keySet().iterator();
+    while (eit.hasNext()) {
+        String key = eit.next();
+        String vals[]=pmap.get(key);
+        for(String val:vals)
+        {
+            extp.append(key);
+            extp.append("=");
+            extp.append(URLEncoder.encode(val,"UTF-8"));
+        }
+    }
+    if(extp.length()>0)extp.insert(0, "&");
+   
+    
     DataObject obj=eng.getDataSource("Page").getObjectByNumId(pid);   
     //System.out.println(obj);
     String _title=obj.getString("name","");
@@ -183,7 +209,17 @@
         if(sid.length==4)_path=_path.replace("{ID}", sid[3]);    
     }
 
-    if(!eng.hasUserAnyRole(obj.getDataList("roles_view")))response.sendError(403,"Acceso Restringido...");
+    if(!eng.hasUserAnyRole(obj.getDataList("roles_view")))
+    {
+        response.sendError(403,"Acceso Restringido...");
+        return;
+    }
+    
+    if(obj.getString("status","").equals("disabled"))
+    {
+        response.sendError(404,"Página no encontrada...");
+        return;        
+    }    
     
     //ajax iframe
     if(aiframe)
@@ -286,7 +322,7 @@
             }else if(type.startsWith("sc"))
             {
 %>
-    <iframe class="ifram_content <%=pid%>" src="<%=_fileName%>?pid=<%=pid%>&iframe=true" frameborder="0" width="100%"></iframe>
+    <iframe class="ifram_content <%=pid%>" src="<%=_fileName%>?pid=<%=pid%>&iframe=true<%=extp%>" frameborder="0" width="100%"></iframe>
     <script type="text/javascript">
         $(window).resize();
     </script>                        

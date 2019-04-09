@@ -171,51 +171,51 @@
         <link href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />          
         <link rel="stylesheet" href="/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
         
-        <link rel="stylesheet" href="/platform/codemirror/lib/codemirror.css">
-        <link rel="stylesheet" href="/platform/codemirror/addon/hint/show-hint.css">
-        <link rel="stylesheet" href="/platform/codemirror/theme/eclipse.css">   
-        <link rel="stylesheet" href="/platform/codemirror/addon/dialog/dialog.css">
-        <link rel="stylesheet" href="/platform/codemirror/addon/lint/lint.css">  
+        <link rel="stylesheet" href="/static/plugins/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="/static/plugins/codemirror/addon/hint/show-hint.css">
+        <link rel="stylesheet" href="/static/plugins/codemirror/theme/eclipse.css">   
+        <link rel="stylesheet" href="/static/plugins/codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="/static/plugins/codemirror/addon/lint/lint.css">  
         
 
-        <script src="/platform/codemirror/lib/codemirror.js"></script>  
-        <script src="/platform/codemirror/addon/hint/show-hint.js"></script>
-        <script src="/platform/codemirror/addon/selection/active-line.js"></script> 
-        <script src="/platform/codemirror/addon/lint/lint.js"></script>       
-        <script src="/platform/codemirror/addon/search/search.js"></script> 
-        <script src="/platform/codemirror/addon/search/searchcursor.js"></script>
-        <script src="/platform/codemirror/addon/dialog/dialog.js"></script>
+        <script src="/static/plugins/codemirror/lib/codemirror.js"></script>  
+        <script src="/static/plugins/codemirror/addon/hint/show-hint.js"></script>
+        <script src="/static/plugins/codemirror/addon/selection/active-line.js"></script> 
+        <script src="/static/plugins/codemirror/addon/lint/lint.js"></script>       
+        <script src="/static/plugins/codemirror/addon/search/search.js"></script> 
+        <script src="/static/plugins/codemirror/addon/search/searchcursor.js"></script>
+        <script src="/static/plugins/codemirror/addon/dialog/dialog.js"></script>
         
         
-        <script src="/platform/codemirror/mode/xml/xml.js"></script>
-        <script src="/platform/codemirror/addon/hint/xml-hint.js"></script>
+        <script src="/static/plugins/codemirror/mode/xml/xml.js"></script>
+        <script src="/static/plugins/codemirror/addon/hint/xml-hint.js"></script>
         
-        <script src="/platform/codemirror/mode/javascript/javascript.js"></script>
-        <script src="/platform/codemirror/addon/hint/javascript-hint.js"></script>
-        <script src="/platform/codemirror/addon/lint/javascript-lint.js"></script>
+        <script src="/static/plugins/codemirror/mode/javascript/javascript.js"></script>
+        <script src="/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
+        <script src="/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
         
-        <script src="/platform/codemirror/addon/lint/json-lint.js"></script>
+        <script src="/static/plugins/codemirror/addon/lint/json-lint.js"></script>
         <!--<script src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>-->
         
-        <script src="/platform/codemirror/addon/edit/matchbrackets.js"></script>
-        <script src="/platform/codemirror/addon/edit/closebrackets.js"></script>
-        <script src="/platform/codemirror/addon/comment/continuecomment.js"></script>
-        <script src="/platform/codemirror/addon/comment/comment.js"></script>
+        <script src="/static/plugins/codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="/static/plugins/codemirror/addon/edit/closebrackets.js"></script>
+        <script src="/static/plugins/codemirror/addon/comment/continuecomment.js"></script>
+        <script src="/static/plugins/codemirror/addon/comment/comment.js"></script>
         
-        <script src="/platform/codemirror/mode/css/css.js"></script>
-        <script src="/platform/codemirror/addon/hint/css-hint.js"></script>
-        <script src="/platform/codemirror/addon/lint/css-lint.js"></script>
+        <script src="/static/plugins/codemirror/mode/css/css.js"></script>
+        <script src="/static/plugins/codemirror/addon/hint/css-hint.js"></script>
+        <script src="/static/plugins/codemirror/addon/lint/css-lint.js"></script>
         <!--<script src="https://rawgithub.com/stubbornella/csslint/master/release/csslint.js"></script>-->
         
-        <script src="/platform/codemirror/mode/clike/clike.js"></script>
+        <script src="/static/plugins/codemirror/mode/clike/clike.js"></script>
         
-        <script src="/platform/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-        <script src="/platform/codemirror/mode/htmlembedded/htmlembedded.js"></script>
-        <script src="/platform/codemirror/addon/hint/html-hint.js"></script>
-        <script src="/platform/codemirror/addon/mode/multiplex.js"></script>
-        <script src="/platform/codemirror/addon/fold/xml-fold.js"></script>
-        <script src="/platform/codemirror/addon/edit/matchtags.js"></script>     
+        <script src="/static/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="/static/plugins/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+        <script src="/static/plugins/codemirror/addon/hint/html-hint.js"></script>
+        <script src="/static/plugins/codemirror/addon/mode/multiplex.js"></script>
+        <script src="/static/plugins/codemirror/addon/fold/xml-fold.js"></script>
+        <script src="/static/plugins/codemirror/addon/edit/matchtags.js"></script>     
         
         <!-- jQuery 2.1.4 -->
         <script src="/static/admin/bower_components/jquery/dist/jquery.min.js"></script>        
@@ -224,7 +224,7 @@
         <script src="/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>          
         
        <!--
-        <sc´ript src="/swbforms/codemirror/addon/edit/closetag.js"></script>
+        <sc´ript src="/static/plugins/codemirror/addon/edit/closetag.js"></script>
         -->
         <style type="text/css">
             .CodeMirror {border: 1px solid black; font-size:13px}

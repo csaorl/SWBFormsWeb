@@ -89,33 +89,33 @@
         <script src="/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
         <link href="/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
         
-        <link rel="stylesheet" href="/platform/codemirror/lib/codemirror.css">
-        <link rel="stylesheet" href="/platform/codemirror/addon/hint/show-hint.css">
-        <link rel="stylesheet" href="/platform/codemirror/theme/eclipse.css">   
-        <link rel="stylesheet" href="/platform/codemirror/addon/dialog/dialog.css">
-        <link rel="stylesheet" href="/platform/codemirror/addon/lint/lint.css">  
+        <link rel="stylesheet" href="/static/plugins/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="/static/plugins/codemirror/addon/hint/show-hint.css">
+        <link rel="stylesheet" href="/static/plugins/codemirror/theme/eclipse.css">   
+        <link rel="stylesheet" href="/static/plugins/codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="/static/plugins/codemirror/addon/lint/lint.css">  
         
 
-        <script src="/platform/codemirror/lib/codemirror.js"></script>  
-        <script src="/platform/codemirror/addon/hint/show-hint.js"></script>
-        <script src="/platform/codemirror/addon/selection/active-line.js"></script> 
-        <script src="/platform/codemirror/addon/lint/lint.js"></script>       
-        <script src="/platform/codemirror/addon/search/search.js"></script> 
-        <script src="/platform/codemirror/addon/search/searchcursor.js"></script>
-        <script src="/platform/codemirror/addon/dialog/dialog.js"></script>
+        <script src="/static/plugins/codemirror/lib/codemirror.js"></script>  
+        <script src="/static/plugins/codemirror/addon/hint/show-hint.js"></script>
+        <script src="/static/plugins/codemirror/addon/selection/active-line.js"></script> 
+        <script src="/static/plugins/codemirror/addon/lint/lint.js"></script>       
+        <script src="/static/plugins/codemirror/addon/search/search.js"></script> 
+        <script src="/static/plugins/codemirror/addon/search/searchcursor.js"></script>
+        <script src="/static/plugins/codemirror/addon/dialog/dialog.js"></script>
         
                 
-        <script src="/platform/codemirror/mode/javascript/javascript.js"></script>
-        <script src="/platform/codemirror/addon/hint/javascript-hint.js"></script>
-        <script src="/platform/codemirror/addon/lint/javascript-lint.js"></script>
+        <script src="/static/plugins/codemirror/mode/javascript/javascript.js"></script>
+        <script src="/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
+        <script src="/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
                 
-        <script src="/platform/codemirror/addon/edit/matchbrackets.js"></script>
-        <script src="/platform/codemirror/addon/edit/closebrackets.js"></script>
-        <script src="/platform/codemirror/addon/comment/continuecomment.js"></script>
-        <script src="/platform/codemirror/addon/comment/comment.js"></script>
+        <script src="/static/plugins/codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="/static/plugins/codemirror/addon/edit/closebrackets.js"></script>
+        <script src="/static/plugins/codemirror/addon/comment/continuecomment.js"></script>
+        <script src="/static/plugins/codemirror/addon/comment/comment.js"></script>
                 
-        <script src="/platform/codemirror/mode/clike/clike.js"></script>
+        <script src="/static/plugins/codemirror/mode/clike/clike.js"></script>
                 
     </head>
     <body>

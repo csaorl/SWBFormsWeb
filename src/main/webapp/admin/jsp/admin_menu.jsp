@@ -11,6 +11,8 @@
         for(int i=0;i<pages.size();i++)
         {
             DataObject obj=pages.getDataObject(i);
+            String status=obj.getString("status","");
+            if(status.equals("disabled")||status.equals("hidden"))continue;
             String pid=obj.getString("parentId");
             if(parentid==pid || (parentid!=null && parentid.equals(pid)))
             {
@@ -37,12 +39,12 @@
                 writePages(obj.getId(), pages, out, eng);
             }else if("group_menu".equals(type))
             {
-                out.println("<li class=\"treeview\"><a href=\"#\"><i class=\""+iconClass+"\"></i><span>"+name+"</span><i class=\"fa fa-angle-left pull-right\"></i></a><ul class=\"treeview-menu\">");
+                out.println("<li class=\"treeview\"><a class=\"cdino_text_menu\" href=\"#\"><i class=\""+iconClass+"\"></i><span>"+name+"</span><i class=\"fa fa-angle-left pull-right\"></i></a><ul class=\"treeview-menu\">");
                 writePages(obj.getId(), pages, out, eng);
                 out.println("</ul></li>");
             }else if("url_content".equals(type))
             {
-                out.println("<li class=\"\"><a href=\""+path+"\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
+                out.println("<li class=\"\"><a class=\"cdino_text_menu\" href=\""+path+"\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
             }else
             {
                 if("sc_grid".equals(type))path="admin_content?pid="+obj.getNumId();
@@ -58,7 +60,7 @@
                     if(urlParams.startsWith("?") || urlParams.startsWith("&"))urlParams=urlParams.substring(1);
                     path+="&"+urlParams;
                 }                
-                out.println("<li class=\"treeview\"><a href=\""+path+"\" data-history=\"#"+obj.getNumId()+"\" data-target=\".content-wrapper\" push-menu=true data-load=\"ajax\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
+                out.println("<li class=\"treeview\"><a class=\"cdino_text_menu\" href=\""+path+"\" data-history=\"#"+obj.getNumId()+"\" data-target=\".content-wrapper\" push-menu=true data-load=\"ajax\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
             }            
         }
     }
@@ -69,7 +71,7 @@
     DataList pages=engine.getDataSource("Page").fetch(query).getDataObject("response").getDataList("data");        
 %>
 <!-- sidebar: style can be found in sidebar.less -->
-<section class="sidebar" style_="overflow: scroll">
+<section class="sidebar">
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu tree" data-widget="tree">    
 <%

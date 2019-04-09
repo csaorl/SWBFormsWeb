@@ -2,7 +2,54 @@
     Document   : prgmmer
     Created on : 12-feb-2018, 12:10:23
     Author     : javiersolis
---%><%@page contentType="text/html" pageEncoding="UTF-8"%>
+--%><%@page import="java.io.IOException"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="org.semanticwb.datamanager.*"%><%@page contentType="text/html" pageEncoding="UTF-8"%><%!
+    
+    DataList getChilds(String parentid, DataList pages)
+    {
+        DataList ret=new DataList();
+        for(int i=0;i<pages.size();i++)
+        {
+            DataObject obj=pages.getDataObject(i);
+            String status=obj.getString("status","");
+            if(status.equals("disabled"))continue;            
+            String pid=obj.getString("parentId");
+            if(parentid==pid || (parentid!=null && parentid.equals(pid)))
+            {
+                ret.add(obj);
+            }
+        }
+        return ret;
+    }
+    
+    void writePages(String parentid, DataList pages, JspWriter out, SWBScriptEngine eng) throws IOException
+    {
+        Iterator<DataObject> it=getChilds(parentid, pages).iterator();
+        while (it.hasNext()) {
+            DataObject obj = it.next();
+            if(!eng.hasUserAnyRole(obj.getDataList("roles_view")))continue;
+            String name=obj.getString("name");
+            String type=obj.getString("type");
+            String path=obj.getString("path");
+            String iconClass=obj.getString("iconClass");
+            if(iconClass==null)iconClass="fa fa-circle-o";
+            if("head".equals(type))
+            {
+                //out.println("<li class=\"header\">"+name+"</li>");
+                writePages(obj.getId(), pages, out, eng);
+            }else if("group_menu".equals(type))
+            {
+                out.println("<li class=\"treeview\"><a class=\"cdino_text_menu\" href=\"#\"><i class=\"fa fa-folder-o\"></i><span>"+name+"</span><i class=\"fa fa-angle-left pull-right\"></i></a><ul class=\"treeview-menu\">");
+                writePages(obj.getId(), pages, out, eng);
+                out.println("</ul></li>");
+            }else
+            {
+                out.println("<li><a class=\"cdino_text_menu\" href=\"uml_funct_model?ID="+obj.getNumId()+"\" data-history=\"#uml_funct_model\" data-target=\".content-wrapper\" data-load=\"ajax\"><i class=\"fa fa-file-o\"></i>"+obj.getString("name")+"</a></li>");
+            }           
+        }
+    }
+%>
 <section class="sidebar" style_="overflow: scroll">
     <ul class="sidebar-menu tree" data-widget="tree">                             
         <li class="header">Programación</li>
@@ -34,7 +81,28 @@
                         
             <ul class="treeview-menu">
                 <li><a href="user_histories" data-history="#user_histories" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>User Histories</a></li>
-                <li><a href="uml" data-history="#uml" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>UML Class</a></li>
+                <li><a href="uml_entity" data-history="#uml" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Entity Diagram</a></li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-wrench"></i>
+                        <span>Functional Models</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+<%
+    SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/admin.js", session);
+    DataObject user = eng.getUser();
+    
+    DataObject query=new DataObject();
+    query.addSubList("sortBy").add("order");
+    DataList pages=eng.getDataSource("Page").fetch(query).getDataObject("response").getDataList("data");        
+    
+    writePages(null,pages,out,eng);
+    
+%>                        
+                    </ul>
+                </li>     
+
             </ul>
             
             <a href="#">
