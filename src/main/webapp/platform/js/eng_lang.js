@@ -1343,6 +1343,7 @@ isc.GridSelectItem.addProperties({
             initialCriteria: this.initialCriteria,
             //getCriteria: this.getPickListFilterCriteria,            
             autoFetchData:false,
+            autoDraw:false,
             data:eng.getDataSource(this.dsDef.dsName).fetch({data:this.initialCriteria}).data,
             recordDrop : function (draggedRecords, targetRecord, targetIndex, sourceWidget) {
                 // Call the super implementation of recordDrop() to update the order of rows in the ListGrid.
@@ -1363,6 +1364,7 @@ isc.GridSelectItem.addProperties({
             canReorderRecords: true,
             dragDataAction: "move",
             autoFetchData:false,
+            autoDraw:false,
             recordDrop : function (draggedRecords, targetRecord, targetIndex, sourceWidget) {
                 // Call the super implementation of recordDrop() to update the order of rows in the ListGrid.
                 this.Super("recordDrop", arguments);
@@ -1383,17 +1385,17 @@ isc.GridSelectItem.addProperties({
             console.log(val);
         }        
             
-        var c=isc.HStack.create({membersMargin:10, width:this.width, height:this.height, members:[
+        var c=isc.HStack.create({membersMargin:10, width:this.width, height:this.height, autoDraw:false, members:[
             grid1,
-            isc.VStack.create({width:"32", height:74, layoutAlign:"center", membersMargin:10, members:[
-                isc.Img.create({src:"/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_plus.png", height:"25px",
+            isc.VStack.create({width:"32", height:74, layoutAlign:"center", membersMargin:10, autoDraw:false, members:[
+                isc.Img.create({src:"/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_plus.png", autoDraw:false, height:"25px",
                     click:function(){
                         grid2.transferSelectedData(grid1);
                         _this.dataValue=grid2.data;
                         _this.storeData();
                     }
                 }),
-                isc.Img.create({src:"/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_minus.png", height:"25px",
+                isc.Img.create({src:"/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_minus.png", autoDraw:false, height:"25px",
                     click:function(){
                         grid1.transferSelectedData(grid2);
                         _this.dataValue=grid2.data;

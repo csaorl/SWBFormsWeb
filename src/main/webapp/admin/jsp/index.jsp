@@ -64,6 +64,9 @@
         <link rel="stylesheet" href="/static/plugins/codemirror/addon/dialog/dialog.css">
         <link rel="stylesheet" href="/static/plugins/codemirror/addon/lint/lint.css">         
 -->
+        <!-- Tabulator -->
+        <link href="/static/plugins/tabulator/css/tabulator.min.css" rel="stylesheet">
+        <link href="/static/plugins/tabulator/css/bootstrap/tabulator_bootstrap.min.css" rel="stylesheet">
 
         <style type="text/css">
             .CodeMirror {border: 1px solid black; font-size:13px}
@@ -346,6 +349,10 @@
             });            
         </script>                 
         <script src="/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>  
+        
+        <!-- Tabulator 
+        <script type="text/javascript" src="/static/plugins/tabulator/js/tabulator.min.js"></script>        
+        -->
         
         <!-- Cloudino Scripts-->
 <!--        
