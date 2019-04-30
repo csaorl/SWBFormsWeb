@@ -19,7 +19,8 @@
             String k=s.trim();
             if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("\"") && k.endsWith("\"")))k=k.substring(1,k.length()-1);
             String replace=request.getParameter(k);
-            if(replace!=null)txt=txt.replace("{$getParameter:"+s+"}", replace);
+            if(replace==null)replace="";
+            txt=txt.replace("{$getParameter:"+s+"}", replace);
         }
 
         it=DataUtils.TEXT.findInterStr(txt, "{$user:", "}");
@@ -347,27 +348,30 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#info" data-toggle="tab" aria-expanded="true"><%=add?"Agregar "+_title:"Información"%></a></li>                                        
 <%
-            Iterator<DataObject> it=childs.iterator();
-            while (it.hasNext()) {
-                DataObject tab = it.next();       
-                String tabType=tab.getString("type");
-                if("ajax_content".equals(tabType))
-                {
-                    String tabPath=tab.getString("path","");
-                    //replace special args
-                    tabPath=tabPath.replace("{id}", id);
-                    String sid[]=id.split(":");
-                    if(sid.length==4)tabPath=tabPath.replace("{ID}", sid[3]);
+            if(!add)
+            {
+                Iterator<DataObject> it=childs.iterator();
+                while (it.hasNext()) {
+                    DataObject tab = it.next();       
+                    String tabType=tab.getString("type");
+                    if("ajax_content".equals(tabType))
+                    {
+                        String tabPath=tab.getString("path","");
+                        //replace special args
+                        tabPath=tabPath.replace("{id}", id);
+                        String sid[]=id.split(":");
+                        if(sid.length==4)tabPath=tabPath.replace("{ID}", sid[3]);
 %>
                     <li class=""><a href="#<%=tab.getNumId()%>" data-toggle="tab" aria-expanded="false" ondblclick="loadContent('<%=tabPath%>','#<%=tab.getNumId()%>')" onclick="this.onclick=undefined;this.ondblclick();"><%=tab.getString("name")%></a></li>
 <%                    
-                }else
-                {
+                    }else
+                    {
 %>
                     <li class=""><a href="#<%=tab.getNumId()%>" data-toggle="tab" aria-expanded="false" ondblclick="loadContent('<%=_fileName%>?pid=<%=tab.getNumId()%>&aiframe=true&id=<%=id%>','#<%=tab.getNumId()%>')" onclick="this.onclick=undefined;this.ondblclick();"><%=tab.getString("name")%></a></li>
 <%
-                }
-            }            
+                    }
+                }   
+            }
 %>                    
                 </ul>
                 <div class="tab-content">
@@ -375,14 +379,17 @@
                         <iframe class="ifram_content <%=pid%>" src="<%=_fileName%>?pid=<%=pid%>&iframe=true<%=(rid!=null)?("&rid="+rid):""%>&id=<%=id%>" frameborder="0" width="100%"></iframe>
                     </div><!-- /.tab-pane -->
 <%
-            it=childs.iterator();
-            while (it.hasNext()) {
-                DataObject tab = it.next();     
-                //System.out.println("tab:"+tab.getNumId()+" "+id);
+            if(!add)
+            {
+                Iterator<DataObject> it=childs.iterator();
+                while (!add && it.hasNext()) {
+                    DataObject tab = it.next();     
+                    //System.out.println("tab:"+tab.getNumId()+" "+id);
 %>
                 <div class="tab-pane" id="<%=tab.getNumId()%>"><center>Loading...</center></div><!-- /.tab-pane -->
 <%
-            }            
+                }            
+            }
 %>                    
                 </div><!-- /.tab-content -->
                 <script type="text/javascript">
