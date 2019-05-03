@@ -56,7 +56,7 @@ var ds_field_atts_vals={
     stype:{type:"string", editorType:"SelectOtherItem", valueMap:{"select":"select","gridSelect":"gridSelect","listGridSelect":"listGridSelect","grid":"grid","time":"time","file":"file","text":"text","html":"html","autogen":"autogen","sequence":"sequence","id":"id"}},
     title:{type:"string", viewAtt:true},
     type:{type:"string", viewAtt:true, editorType:"SelectOtherItem", valueMap:ds_field_types},
-    validators:{type:"string", editorType:"SelectItem", multiple:true, valueMap:{}},
+    validators:{type:"object", editorType:"SelectItem", multiple:true, valueMap:{}},
     valueMap:{type:"object"},                                                                               //select
     width:{type:"string", viewAtt:true},
 };
