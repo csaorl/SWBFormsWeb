@@ -14,7 +14,8 @@
         return baos.toByteArray();
     }
 %><%
-    SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/admin_base.js", session);  
+    String contextPath = request.getContextPath();   
+    SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/admin.js", session);  
     if(!eng.hasUserRole("prog"))
     {
         response.sendError(403);
@@ -31,14 +32,14 @@
     <h1>Archivos <small><%=id%></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <li>Programación</li>
         <li class="active"><a href="prog_ds" data-history="#prog_ds" data-target=".content-wrapper" data-load="ajax">Archivos</a></li>        
     </ol>
 </section>
 
 <section id="content" style="padding: 7px">  
-    <iframe class="ifram_content" src="/admin/editor?id=<%=id%>" frameborder="0" width="100%">Cargando...</iframe>
+    <iframe class="ifram_content" src="<%=contextPath%>/admin/editor?id=<%=id%>" frameborder="0" width="100%">Cargando...</iframe>
     <script type="text/javascript">
         $(window).resize();
     </script>                        
@@ -168,60 +169,60 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Editor</title>
-        <link href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />          
-        <link rel="stylesheet" href="/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
+        <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />          
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
         
-        <link rel="stylesheet" href="/static/plugins/codemirror/lib/codemirror.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/hint/show-hint.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/theme/eclipse.css">   
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/dialog/dialog.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/lint/lint.css">  
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/hint/show-hint.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/theme/eclipse.css">   
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/lint/lint.css">  
         
 
-        <script src="/static/plugins/codemirror/lib/codemirror.js"></script>  
-        <script src="/static/plugins/codemirror/addon/hint/show-hint.js"></script>
-        <script src="/static/plugins/codemirror/addon/selection/active-line.js"></script> 
-        <script src="/static/plugins/codemirror/addon/lint/lint.js"></script>       
-        <script src="/static/plugins/codemirror/addon/search/search.js"></script> 
-        <script src="/static/plugins/codemirror/addon/search/searchcursor.js"></script>
-        <script src="/static/plugins/codemirror/addon/dialog/dialog.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/lib/codemirror.js"></script>  
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/show-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/selection/active-line.js"></script> 
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/lint.js"></script>       
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/search/search.js"></script> 
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/search/searchcursor.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.js"></script>
         
         
-        <script src="/static/plugins/codemirror/mode/xml/xml.js"></script>
-        <script src="/static/plugins/codemirror/addon/hint/xml-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/xml/xml.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/xml-hint.js"></script>
         
-        <script src="/static/plugins/codemirror/mode/javascript/javascript.js"></script>
-        <script src="/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
-        <script src="/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/javascript/javascript.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
         
-        <script src="/static/plugins/codemirror/addon/lint/json-lint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/json-lint.js"></script>
         <!--<script src="https://rawgithub.com/zaach/jsonlint/79b553fb65c192add9066da64043458981b3972b/lib/jsonlint.js"></script>-->
         
-        <script src="/static/plugins/codemirror/addon/edit/matchbrackets.js"></script>
-        <script src="/static/plugins/codemirror/addon/edit/closebrackets.js"></script>
-        <script src="/static/plugins/codemirror/addon/comment/continuecomment.js"></script>
-        <script src="/static/plugins/codemirror/addon/comment/comment.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/edit/closebrackets.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/comment/continuecomment.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/comment/comment.js"></script>
         
-        <script src="/static/plugins/codemirror/mode/css/css.js"></script>
-        <script src="/static/plugins/codemirror/addon/hint/css-hint.js"></script>
-        <script src="/static/plugins/codemirror/addon/lint/css-lint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/css/css.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/css-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/css-lint.js"></script>
         <!--<script src="https://rawgithub.com/stubbornella/csslint/master/release/csslint.js"></script>-->
         
-        <script src="/static/plugins/codemirror/mode/clike/clike.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/clike/clike.js"></script>
         
-        <script src="/static/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-        <script src="/static/plugins/codemirror/mode/htmlembedded/htmlembedded.js"></script>
-        <script src="/static/plugins/codemirror/addon/hint/html-hint.js"></script>
-        <script src="/static/plugins/codemirror/addon/mode/multiplex.js"></script>
-        <script src="/static/plugins/codemirror/addon/fold/xml-fold.js"></script>
-        <script src="/static/plugins/codemirror/addon/edit/matchtags.js"></script>     
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/htmlembedded/htmlembedded.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/html-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/mode/multiplex.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/fold/xml-fold.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/edit/matchtags.js"></script>     
         
         <!-- jQuery 2.1.4 -->
-        <script src="/static/admin/bower_components/jquery/dist/jquery.min.js"></script>        
+        <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>        
         <!-- Bootstrap 3.3.2 JS -->
-        <script src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>          
-        <script src="/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>          
+        <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>          
+        <script src="<%=contextPath%>/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>          
         
        <!--
         <sc´ript src="/static/plugins/codemirror/addon/edit/closetag.js"></script>

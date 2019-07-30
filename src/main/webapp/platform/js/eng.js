@@ -1,6 +1,8 @@
-window.isomorphicDir = "/platform/isomorphic/";
+window.isomorphicDir= "/platform/isomorphic/";
 
-var eng = {
+var eng = {    
+    staticVersion: "v0001",
+    
     operationBindings: [
         {operationType: "fetch", dataProtocol: "postMessage"},
         {operationType: "add", dataProtocol: "postMessage"},
@@ -25,6 +27,8 @@ var eng = {
     dsCounter:0,                        //contador incremental para IDs de datasources 
     
     dataSourceScriptPath:"",            //ruta de datasource.js
+    
+    contextPath:"",
     
     dataSourceServlet:"/ds",
     
@@ -773,7 +777,7 @@ var eng = {
                 data.ID = dsObjDef.dsId;
                 data.dsName = dsObjDef.dsName;
                 data.dataFormat = "json";
-                data.dataURL = eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath+"&ds="+dsObjDef.dsName;// + "&scls=" + data.scls;//+"&modelid=" + data.modelid;
+                data.dataURL = eng.contextPath + eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath+"&ds="+dsObjDef.dsName;// + "&scls=" + data.scls;//+"&modelid=" + data.modelid;
                 data.operationBindings = eng.operationBindings;
                 data.jsonPrefix="";
                 data.jsonSuffix="";
@@ -1060,9 +1064,9 @@ var eng = {
                                     }
                                     data.fields=s;                                    
                                 }                                
-                                var path="/ex"+grid.getDataSource().dataURL.substring(3)+"&ext=xls"+"&data="+encodeURI(JSON.stringify(data));
+                                var path="/ex"+grid.getDataSource().dataURL.substring(3+eng.contextPath.length)+"&ext=csv"+"&data="+encodeURI(JSON.stringify(data));
                                 //console.log(data,path);
-                                window.location.href=path;
+                                window.location.href=eng.contextPath+path;
                             }
                         },
                         {title:"Exportar DS", 
@@ -1090,9 +1094,9 @@ var eng = {
                                     }
                                     data.query.sortBy=s;
                                 }
-                                var path="/ex"+grid.getDataSource().dataURL.substring(3)+"&ext=xls"+"&data="+encodeURI(JSON.stringify(data));
+                                var path="/ex"+grid.getDataSource().dataURL.substring(3+eng.contextPath.length)+"&ext=csv"+"&data="+encodeURI(JSON.stringify(data));
                                 //console.log(data,path);
-                                window.location.href=path;
+                                window.location.href=eng.contextPath+path;
                             }                            
                         },
                     ]
@@ -1577,7 +1581,7 @@ var eng = {
          * @param {type} eval
          * @returns {undefined}
          */
-        loadJS: function(file, evaluate, cache, local)
+        loadJS: function(file, evaluate, cache, local, id)
         {
             var noEval=true;
             if(evaluate && evaluate==true)noEval=false;
@@ -1589,7 +1593,7 @@ var eng = {
                 aScriptSource = local?localStorage.getItem(file):sessionStorage.getItem(file);
                 if(aScriptSource==null)
                 {
-                    aScriptSource = eng.utils.getSynchData(file+"?id="+(eng.id?eng.id:new Date().getTime())).responseText + '\n////# sourceURL=' + file + '\n';
+                    aScriptSource = eng.utils.getSynchData(file+"?id="+(id?id:eng.id?eng.id:new Date().getTime())).responseText + '\n////# sourceURL=' + file + '\n';
                     try{
                         if(local)
                             localStorage.setItem(file,aScriptSource);
@@ -1599,7 +1603,7 @@ var eng = {
                 }
             }else
             {
-                aScriptSource = eng.utils.getSynchData(file+"?id="+(eng.id?eng.id:new Date().getTime())).responseText + '\n////# sourceURL=' + file + '\n';
+                aScriptSource = eng.utils.getSynchData(file+"?id="+(id?id:eng.id?eng.id:new Date().getTime())).responseText + '\n////# sourceURL=' + file + '\n';
             }
             
             if(noEval)
@@ -1630,7 +1634,7 @@ var eng = {
             var fileref=document.createElement("link");
             fileref.setAttribute("rel", "stylesheet");
             fileref.setAttribute("type", "text/css");
-            fileref.setAttribute("href", filename);
+            fileref.setAttribute("href", filename.startsWidth("/")?eng.contextPath+filename:filename);
 
             if (typeof fileref!="undefined")
             {
@@ -1825,7 +1829,7 @@ var eng = {
             
             invokeDS:function(data)
             {
-                var res=eng.utils.getSynchData(eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath+"&ds="+this.name,JSON.stringify(data));
+                var res=eng.utils.getSynchData(eng.contextPath+ eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath+"&ds="+this.name,JSON.stringify(data));
                 if(res.status==200)
                 {
                     var ret=JSON.parse(res.response);
@@ -2059,6 +2063,19 @@ var eng = {
         };
     },
     
+    getProcessStates:function(prop){
+        var ret={};
+        var data=eng.getDataSource("SWBF_State").fetch({data:{"prop":prop}}).data;
+        if(data)
+        {
+            for(var x=0;x<data.length;x++)
+            {
+                ret[data[x].value]=data[x].name;
+            }
+        }
+        return ret;
+    },   
+    
     /**
      * Get the user context data
      * @returns context data
@@ -2069,7 +2086,7 @@ var eng = {
         data.operationType="contextData";
         data.dataKey=key;
 
-        var res=eng.utils.getSynchData(eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
+        var res=eng.utils.getSynchData(eng.contextPath + eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
         if(res.status==200)
         {
             var ret=JSON.parse(res.response).response; 
@@ -2088,7 +2105,7 @@ var eng = {
         var data={username:username,password:password};
         data.operationType="login";
 
-        var res=eng.utils.getSynchData(eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
+        var res=eng.utils.getSynchData(eng.contextPath + eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
         if(res.status==200)
         {
             var ret=JSON.parse(res.response).response; 
@@ -2108,7 +2125,7 @@ var eng = {
         var data={};
         data.operationType="logout";
 
-        var res=eng.utils.getSynchData(eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
+        var res=eng.utils.getSynchData(eng.contextPath + eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
         if(res.status==200)
         {
             eng._u={usr:undefined};
@@ -2129,7 +2146,7 @@ var eng = {
             var data={};
             data.operationType="user";
 
-            var res=eng.utils.getSynchData(eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
+            var res=eng.utils.getSynchData(eng.contextPath + eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
             if(res.status==200)
             {
                 var ret=JSON.parse(res.response).response; 
@@ -2152,7 +2169,7 @@ var eng = {
         data.operationType="contextData";
         data.dataKey=key;
 
-        var res=eng.utils.getSynchData(eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
+        var res=eng.utils.getSynchData(eng.contextPath + eng.dataSourceServlet+"?dssp="+eng.dataSourceScriptPath,JSON.stringify(data));
         if(res.status==200)
         {
             var ret=JSON.parse(res.response).response; 
@@ -2191,6 +2208,9 @@ var eng = {
                 if(i>-1)
                 {
                     eng.id=src.substring(i+10);
+                    eng.contextPath=src.substring(src.indexOf("/",8),src.indexOf("/platform/"));
+                    isomorphicDir=eng.contextPath+isomorphicDir;
+                    //console.log("eng.contextPath",eng.contextPath);
                 }
             }
         }
@@ -2209,11 +2229,14 @@ var eng = {
         
         if(cache)
         {
-            if(localStorage.getItem("engId")!=eng.id){
+            if(sessionStorage.getItem("engId")!=eng.id){
                 sessionStorage.clear();
+                sessionStorage.setItem("engId",eng.id);
+            }
+            if(localStorage.getItem("staticVersion")!=eng.staticVersion){
                 localStorage.clear();
-                localStorage.setItem("engId",eng.id);
-            }            
+                localStorage.setItem("staticVersion",eng.staticVersion);
+            }
         }
         
         if(!eng.inited)
@@ -2222,17 +2245,17 @@ var eng = {
             
             if(_isc)
             {
-                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Core.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Foundation.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Containers.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Grids.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Forms.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_DataBinding.js",false,cache,true);
-                if(_isc_richTextEditor)eng.utils.loadJS(isomorphicDir+"system/modules/ISC_RichTextEditor.js",false,cache,true);            
-                if(_isc_calendar)eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Calendar.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"skins/Tahoe/load_skin.js",false,cache,true);
-                eng.utils.loadJS(isomorphicDir+"locales/frameworkMessages_es.properties",false,cache,true);
-                eng.utils.loadJS("/platform/plupload/js/plupload.full.min.js",false,cache,true);
+                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Core.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Foundation.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Containers.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Grids.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Forms.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"system/modules/ISC_DataBinding.js",false,cache,true,eng.staticVersion);
+                if(_isc_richTextEditor)eng.utils.loadJS(isomorphicDir+"system/modules/ISC_RichTextEditor.js",false,cache,true,eng.staticVersion);            
+                if(_isc_calendar)eng.utils.loadJS(isomorphicDir+"system/modules/ISC_Calendar.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"skins/Tahoe/load_skin.js",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(isomorphicDir+"locales/frameworkMessages_es.properties",false,cache,true,eng.staticVersion);
+                eng.utils.loadJS(eng.contextPath + "/platform/plupload/js/plupload.full.min.js",false,cache,true, eng.staticVersion);
                         
                 isc.DateItem.DEFAULT_START_DATE.setYear(1900);
             
@@ -2246,9 +2269,9 @@ var eng = {
                 NumberUtil.decimalSymbol=".";
                 NumberUtil.groupingSymbol=",";              
             
-                eng.utils.loadJS("/platform/js/eng_lang.js",false,cache,true);
+                eng.utils.loadJS(eng.contextPath + "/platform/js/eng_lang.js",false,cache,true, eng.staticVersion);
             }
-            
+            //console.log("window.location.pathname",window.location.pathname);
             if(typeof file === 'string')
             {
                 if(file.charAt(0)!='/')
@@ -2258,13 +2281,13 @@ var eng = {
                 {
                     eng.dataSourceScriptPath=file;
                 }
-                eng.utils.loadJS(file,false,cache);
+                eng.utils.loadJS(eng.contextPath + file,false,cache);
             }else if (Array.isArray(file))
             {
                 eng.dataSourceScriptPath=window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/'))+"/"+JSON.stringify(file);
                 for(var i=0;i<file.length;i++)
                 {
-                    eng.utils.loadJS(file[i],false,cache);                       
+                    eng.utils.loadJS(eng.contextPath + file[i],false,cache);                       
                 }
             }
             
@@ -2286,7 +2309,7 @@ var eng = {
             if(file.charAt(0)!='/')
             {
                 file=window.location.pathname.substring(0,window.location.pathname.lastIndexOf('/'))+"/"+file;
-            }
+            }else file=eng.contextPath+file;
             
             var baseFile=file;
             var i=file.indexOf("?");

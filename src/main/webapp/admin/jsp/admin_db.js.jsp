@@ -5,7 +5,7 @@
 --%><%@page import="org.semanticwb.swbforms.admin.AdminUtils"%><%@page import="java.util.Iterator"%><%@page import="org.semanticwb.datamanager.*"%><%@page contentType="text/javascript" pageEncoding="UTF-8"%><%!
 
 %><%
-    SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/admin_base.js", session);  
+    SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/admin.js", session);  
 /*    
     if(eng.isNeedsReloadScriptEngine())
     {

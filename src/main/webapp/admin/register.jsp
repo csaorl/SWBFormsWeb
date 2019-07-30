@@ -5,7 +5,8 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="org.semanticwb.datamanager.*"%><%
-    SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/base.js", session);
+    String contextPath = request.getContextPath();
+    SWBScriptEngine eng = DataMgr.initPlatform("/WEB-INF/global.js", session);
     String fullname = request.getParameter("fullname");
     String email = request.getParameter("email");
     String password = request.getParameter("password");
@@ -41,20 +42,20 @@
         <title><%=eng.getAppName()%> | Registration Page</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.4 -->
-        <link href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+        <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
         <!-- Font Awesome Icons -->
-        <link href="/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
-        <link href="/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
         <!-- iCheck -->
-        <link href="/static/admin/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
-        <link href="/admin/css/login.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/admin/css/login.css" rel="stylesheet" type="text/css" />
         
     </head>
     <body class="register-page">
         <div class="register-box">
             <div class="register-logo">
-                <a href="/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+                <a href="<%=contextPath%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
             </div>
 
             <div class="register-box-body">
@@ -103,17 +104,17 @@
                           <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign up using Google+</a>
                         </div>
                 -->
-                <a href="/login" class="text-center">Ya tengo un usuario y contraseña</a>
+                <a href="<%=contextPath%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
             </div><!-- /.form-box -->
         </div><!-- /.register-box -->
 
         <!-- jQuery 2.1.4 -->
-        <script src="/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
         <!-- Bootstrap 3.3.2 JS -->
-        <script src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>  
+        <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>  
         <!-- iCheck -->
-        <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>        
-        <script src="/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+        <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>        
+        <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
         <script>
             $(function () {
                 $('input').iCheck({

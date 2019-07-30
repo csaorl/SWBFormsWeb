@@ -109,7 +109,7 @@
         data.append("<frame>");
         data.append(obj.getString("name"));
         data.append("|");
-        data.append("tipo: ");
+        data.append("Tipo: ");
         
         String type=obj.getString("type");        
         data.append(types.get(type));
@@ -138,7 +138,16 @@
             data.append("|path: ");            
             data.append(obj.getString("path"));
             data.append("");    
-        }        
+        }   
+        if(type.startsWith("process_tray"))
+        {
+            data.append("|[Processos (Bandeja)|");            
+            data.append(getFields(obj, "gridProps", eng));
+            data.append("]-->");    
+            data.append("[Proceso (Detalle)|");            
+            data.append(getFields(obj, "formProps", eng));
+            data.append("]\\n");    
+        }  
 
         //findChilds
         DataObject query=new DataObject();
@@ -189,12 +198,13 @@
     }
 
 %><%
+    String contextPath = request.getContextPath();     
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);    
     boolean iframe=request.getParameter("iframe")!=null;     
     String ID=request.getParameter("ID");     
     //System.out.println(obj);
     String _title="Functional Model Diagram";
-    String _fileName="/admin/jsp/uml_funct_model.jsp";
+    String _fileName=contextPath+"/admin/jsp/uml_funct_model.jsp";
     //if(!eng.hasUserAnyRole(obj.getDataList("roles_view")))response.sendError(403,"Acceso Restringido...");
     
     
@@ -219,7 +229,7 @@
         <small><%=_smallName%></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <li>Programación</li>
         <li class="active"><a href="<%=_fileName%>" data-history="#<%=_fileName%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
     </ol>
@@ -249,9 +259,9 @@
         </style>
     </head>
     <body>
-        <script src="/admin/utils/nomnoml/lodash.min.js"></script>
-        <script src="/admin/utils/nomnoml/dagre.min.js"></script>
-        <script src="/admin/utils/nomnoml/nomnoml.js"></script>
+        <script src="<%=contextPath%>/admin/utils/nomnoml/lodash.min.js"></script>
+        <script src="<%=contextPath%>/admin/utils/nomnoml/dagre.min.js"></script>
+        <script src="<%=contextPath%>/admin/utils/nomnoml/nomnoml.js"></script>
 
         <canvas id="target-canvas" style="height: 100%"></canvas>
         <script>

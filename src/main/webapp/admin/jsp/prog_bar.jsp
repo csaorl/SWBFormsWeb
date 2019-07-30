@@ -62,16 +62,27 @@
         <li class="treeview">
             <a href="#">
                 <i class="fa fa-wrench"></i>
-                <span>DataManager</span>
+                <span>Data Manager</span>
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
                 <li><a href="prog_ds" data-history="#prog_ds" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataSources</a></li>
                 <li><a href="prog_vm" data-history="#prog_vm" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>ValueMaps</a></li>
                 <li><a href="prog_valid" data-history="#prog_valid" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Validators</a></li>
+                <li><a href="prog_gscript" data-history="#prog_gscript" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>GlobalScripts</a></li>
                 <li><a href="prog_dproc" data-history="#prog_dproc" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataProcessors</a></li>
                 <li><a href="prog_dsrv" data-history="#prog_dsrv" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataServices</a></li>
+                <li><a href="prog_dext" data-history="#prog_dext" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataExtractors</a></li>
             </ul>
+            
+            <a href="#">
+                <i class="fa fa-wrench"></i>
+                <span>Process Manager</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="prog_process" data-history="#prog_process" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Processes</a></li>
+            </ul>            
             
             <a href="#">
                 <i class="fa fa-wrench"></i>
@@ -80,7 +91,7 @@
             </a>
                         
             <ul class="treeview-menu">
-                <li><a href="user_histories" data-history="#user_histories" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>User Histories</a></li>
+                <!--<li><a href="user_histories" data-history="#user_histories" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>User Histories</a></li>-->
                 <li><a href="uml_entity" data-history="#uml" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Entity Diagram</a></li>
                 <li class="treeview">
                     <a href="#">
@@ -104,6 +115,17 @@
                 </li>     
 
             </ul>
+            <a href="#">
+                <i class="fa fa-wrench"></i>
+                <span>Utils</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="prog_impJSON" data-history="#prog_impJSON" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Import JSON Data</a></li>
+            </ul>                    
+            <ul class="treeview-menu">
+                <li><a href="prog_export" data-history="#prog_export" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Export Data</a></li>
+            </ul>                    
             
             <a href="#">
                 <i class="fa fa-wrench"></i>

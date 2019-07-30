@@ -3,8 +3,9 @@
     Created on : 15-abr-2017, 12:26:32
     Author     : javiersolis
 --%><%@page import="org.semanticwb.datamanager.*"%><%
+    String contextPath = request.getContextPath();
     System.out.println("Validator");
-    SWBScriptEngine engine = DataMgr.initPlatform("/admin/ds/base.js",session);
+    SWBScriptEngine engine = DataMgr.initPlatform("/WEB-INF/global.js",session);
 
     String cmd = (String)request.getAttribute("servletPath");
     cmd = cmd.substring(cmd.lastIndexOf("/") + 1);

@@ -6,7 +6,8 @@
 <%@page import="org.semanticwb.datamanager.*"%><%!
     private static final Logger logger = Logger.getLogger("passwordRecovery");
 %><%
-    SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/base.js",session);
+    String contextPath = request.getContextPath();
+    SWBScriptEngine eng=DataMgr.initPlatform("/WEB-INF/global.js",session);
     SWBDataSource ds=eng.getDataSource("User");
 
     if (request.getMethod().equals("POST")) 

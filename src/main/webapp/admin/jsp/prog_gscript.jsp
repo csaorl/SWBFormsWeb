@@ -6,9 +6,9 @@
 <%@page import="org.semanticwb.datamanager.SWBScriptEngine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
     String contextPath = request.getContextPath();     
-    String _title="DataProcessor";
-    String _ds="DataProcessor";
-    String _fileName="prog_dproc";
+    String _title="GlobalScript";
+    String _ds="GlobalScript";
+    String _fileName="prog_gscript";
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);
     //if(!eng.hasUserPermission(_permision))response.sendError(403,"Acceso Restringido...");
 
@@ -96,6 +96,7 @@
         <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.css">
         <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/lint/lint.css">  
         
+
         <script src="<%=contextPath%>/static/plugins/codemirror/lib/codemirror.js"></script>  
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/show-hint.js"></script>
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/selection/active-line.js"></script> 
@@ -103,7 +104,8 @@
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/search/search.js"></script> 
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/search/searchcursor.js"></script>
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.js"></script>
-                        
+        
+                
         <script src="<%=contextPath%>/static/plugins/codemirror/mode/javascript/javascript.js"></script>
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
         <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
@@ -145,12 +147,9 @@
                 fields: [
                     {name: "id"},
                     {name: "description"},
-                    {name: "dataSources"},
-                    {name: "actions"},
                     {name: "order", width:80},
-                    {name: "active", width:50},                    
-                    //{name: "request"},
-                    //{name: "response"},
+                    {name: "active", width:50},
+                    //{name: "script"},
                     //{name: "created"},
                     //{name: "creator"},
                     //{name: "updated"},
@@ -191,8 +190,6 @@
         {
             String sid = add?"null":"\"" + id + "\"";
 %>
-            
-    
             var form = eng.createForm({
                 width: "100%",
                 left: "-8px",
@@ -227,12 +224,10 @@
                 fields: [
                     {name: "id"},
                     {name: "description", stype:"text"},
-                    {name: "dataSources"},
-                    {name: "actions"},
+                    {name: "scriptEngine"},
                     {name: "order"},
-                    {name: "active", width:50},                    
-                    {name: "request", height:300},
-                    {name: "response", height:300},
+                    {name: "active", width:50},
+                    {name: "script", height:300},
 <%if(!add){%>                    
                     {name: "created"},
                     {name: "creator"},
@@ -243,12 +238,10 @@
                                 
                 onLoad:function()
                 {
-                    var req="request";
-                    var res="response";
-                    var reqele=document.getElementsByName(req)[0];
-                    var resele=document.getElementsByName(res)[0];
-                                                            
-                    var reqCM = CodeMirror.fromTextArea(reqele, {
+                    var prop="script";
+                    var ele=document.getElementsByName(prop)[0];
+                                        
+                    var myCodeMirror = CodeMirror.fromTextArea(ele, {
                         mode: "text/javascript",                            
                         smartIndent: true,
                         lineNumbers: true,
@@ -263,45 +256,23 @@
                         lint: true,
                     }); 
                     
-                    var resCM = CodeMirror.fromTextArea(resele, {
-                        mode: "text/javascript",                            
-                        smartIndent: true,
-                        lineNumbers: true,
-                        styleActiveLine: true,
-                        matchBrackets: true,
-                        autoCloseBrackets: true,
-                        theme: "eclipse",
-                        continueComments: "Enter",
-                        extraKeys: {"Ctrl-Space": "autocomplete","Ctrl-Q": "toggleComment","Ctrl-J": "toMatchingTag"},
-                        matchTags: {bothTags: true},                  
-                        gutters: ["CodeMirror-lint-markers"],
-                        lint: true,
-                    }); 
-                    
-                    reqCM.on('blur',function(cm){
+                    myCodeMirror.on('blur',function(cm){
                         // get value right from instance
-                        form.setValue(req,cm.getValue());
+                        form.setValue(prop,cm.getValue());
                     });
                     
-                    resCM.on('blur',function(cm){
-                        // get value right from instance
-                        form.setValue(res,cm.getValue());
-                    });
-                    
-                    var repaint=function(name,cm){
+                    var repaint=function(){
                         setTimeout(function(){ 
-                            var ele=document.getElementsByName(name)[0];
+                            var ele=document.getElementsByName(prop)[0];
                             ele.style.display = "none";
-                            ele.parentNode.insertBefore(cm.getWrapperElement(), ele.nextSibling);
+                            ele.parentNode.insertBefore(myCodeMirror.getWrapperElement(), ele.nextSibling);
                         },0);
                     };
                     
-                    repaint(req,reqCM);
-                    repaint(res,resCM);
+                    repaint();
                                                                 
                     window.addEventListener("resize", function(){
-                        repaint(req,reqCM);
-                        repaint(res,resCM);
+                        repaint();
                     });                   
                 }
                 

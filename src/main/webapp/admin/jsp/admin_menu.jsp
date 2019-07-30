@@ -22,7 +22,7 @@
         return ret;
     }
     
-    void writePages(String parentid, DataList pages, JspWriter out, SWBScriptEngine eng) throws IOException
+    void writePages(String parentid, DataList pages, JspWriter out, SWBScriptEngine eng, String contextPath) throws IOException
     {
         Iterator<DataObject> it=getChilds(parentid, pages).iterator();
         while (it.hasNext()) {
@@ -36,15 +36,15 @@
             if("head".equals(type))
             {
                 out.println("<li class=\"header\">"+name+"</li>");
-                writePages(obj.getId(), pages, out, eng);
+                writePages(obj.getId(), pages, out, eng, contextPath);
             }else if("group_menu".equals(type))
             {
                 out.println("<li class=\"treeview\"><a class=\"cdino_text_menu\" href=\"#\"><i class=\""+iconClass+"\"></i><span>"+name+"</span><i class=\"fa fa-angle-left pull-right\"></i></a><ul class=\"treeview-menu\">");
-                writePages(obj.getId(), pages, out, eng);
+                writePages(obj.getId(), pages, out, eng, contextPath);
                 out.println("</ul></li>");
             }else if("url_content".equals(type))
             {
-                out.println("<li class=\"\"><a class=\"cdino_text_menu\" href=\""+path+"\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
+                out.println("<li class=\"\"><a class=\"cdino_text_menu\" href=\""+(path.startsWith("/")?contextPath+path:path)+"\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
             }else
             {
                 if("sc_grid".equals(type))path="admin_content?pid="+obj.getNumId();
@@ -52,6 +52,7 @@
                 if("sc_form".equals(type))path="admin_content?pid="+obj.getNumId();
                 if("iframe_content".equals(type))path="admin_content?pid="+obj.getNumId();
                 if("ajax_content".equals(type))path="admin_content?pid="+obj.getNumId();
+                if("process_tray".equals(type))path="admin_content?pid="+obj.getNumId();
                 
                 String urlParams=obj.getString("urlParams","");
                 if(urlParams.length()>0)
@@ -60,7 +61,7 @@
                     if(urlParams.startsWith("?") || urlParams.startsWith("&"))urlParams=urlParams.substring(1);
                     path+="&"+urlParams;
                 }                
-                out.println("<li class=\"treeview\"><a class=\"cdino_text_menu\" href=\""+path+"\" data-history=\"#"+obj.getNumId()+"\" data-target=\".content-wrapper\" push-menu=true data-load=\"ajax\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
+                out.println("<li class=\"treeview\"><a class=\"cdino_text_menu\" href=\""+(path.startsWith("/")?contextPath+path:path)+"\" data-history=\"#"+obj.getNumId()+"\" data-target=\".content-wrapper\" push-menu=true data-load=\"ajax\"><i class=\""+iconClass+"\"></i>"+name+"</a></li>");
             }            
         }
     }
@@ -75,7 +76,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu tree" data-widget="tree">    
 <%
-    writePages(null,pages,out,engine);
+    writePages(null,pages,out,engine,contextPath);
 %>
     </ul>
 </section>

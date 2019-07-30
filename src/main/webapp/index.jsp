@@ -1,6 +1,9 @@
 <%@page import="org.semanticwb.datamanager.*"%><%        
-    SWBScriptEngine eng=DataMgr.initPlatform(session);
-    response.sendRedirect("/admin");
+    String contextPath = request.getContextPath();
+    SWBScriptEngine eng=DataMgr.initPlatform("/WEB-INF/global.js",session);
+    response.sendRedirect(contextPath+"/admin");
+    //System.out.println("servletPath:"+request.getAttribute("servletPath"));
+    //System.out.println("contextPath:"+request.getAttribute("contextPath"));
     if(true)return;
 %>
 <!DOCTYPE html>
@@ -23,8 +26,8 @@
     }
 %>        
         <h2>Paths</h2>
-        <div><a href="/admin">/admin</a></div>
-        <div><a href="/login">/login</a></div>
-        <div><a href="/register">/register</a></div>
+        <div><a href="<%=contextPath%>/admin">/admin</a></div>
+        <div><a href="<%=contextPath%>/login">/login</a></div>
+        <div><a href="<%=contextPath%>/register">/register</a></div>
     </body>
 </html>

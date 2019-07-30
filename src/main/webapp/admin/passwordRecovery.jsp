@@ -6,7 +6,8 @@
 <%@page import="org.semanticwb.datamanager.*"%><%!
     private static final Logger logger = Logger.getLogger("passwordRecovery");
 %><%
-    SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/base.js",session);
+    String contextPath = request.getContextPath();
+    SWBScriptEngine eng=DataMgr.initPlatform("/WEB-INF/global.js",session);
     SWBDataSource ds=eng.getDataSource("User");
 
     if (request.getMethod().equals("POST")) 
@@ -32,13 +33,13 @@
     <title><%=eng.getAppName()%> | Registration Page</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -51,7 +52,7 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=contextPath%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
@@ -59,17 +60,17 @@
              
         <p class="login-box-msg">Tu contraseña ha sido cambiada...</p>
         
-        <a href="<%=request.getContextPath()%>/" class="text-center">Regresar a la pagina inicial</a>
+        <a href="<%=contextPath%>/" class="text-center">Regresar a la pagina inicial</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -92,13 +93,13 @@
     <title><%=eng.getAppName()%> | Recuperar Contraseña</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -110,7 +111,7 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=contextPath%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
@@ -118,7 +119,7 @@
         <p class="login-box-msg text-danger">Error al recuperar contraseña</p>
         <form action="" method="post" data-toggle="validator" role="form" id="regForm">
           <div class="form-group has-feedback">
-            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
+            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="<%=contextPath%>/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             <div class="help-block with-errors"></div>
           </div>
@@ -128,17 +129,17 @@
             </div><!-- /.col -->
           </div>
         </form>        
-        <a href="<%=request.getContextPath()%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
+        <a href="<%=contextPath%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -193,13 +194,13 @@
     <title><%=eng.getAppName()%> | Recuperar Contraseña</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -211,7 +212,7 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=contextPath%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
@@ -219,17 +220,17 @@
              
         <p class="login-box-msg">Recibiras un correo electrónico con el vínculo para recuperar tu contraseña</p>
         
-        <a href="<%=request.getContextPath()%>/" class="text-center">Regresar a la pagina de inicio</a>
+        <a href="<%=contextPath%>/" class="text-center">Regresar a la pagina de inicio</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -251,13 +252,13 @@
     <title><%=eng.getAppName()%> | Recuperar Contraseña</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -269,7 +270,7 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=contextPath%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
@@ -277,7 +278,7 @@
         <p class="login-box-msg text-danger">El correo electrónico no esta registrado</p>
         <form action="" method="post" data-toggle="validator" role="form" id="regForm">
           <div class="form-group has-feedback">
-            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
+            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="<%=contextPath%>/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             <div class="help-block with-errors"></div>
           </div>
@@ -287,17 +288,17 @@
             </div><!-- /.col -->
           </div>
         </form>        
-        <a href="<%=request.getContextPath()%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
+        <a href="<%=contextPath%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -329,13 +330,13 @@
     <title><%=eng.getAppName()%> | Password Recovery Page</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -347,7 +348,7 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=request.getContextPath()%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
@@ -379,17 +380,17 @@
             </div><!-- /.col -->
           </div>
         </form>        
-        <a href="<%=request.getContextPath()%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
+        <a href="<%=contextPath%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -412,13 +413,13 @@
     <title><%=eng.getAppName()%> | Password Recovery Page</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -430,7 +431,7 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=contextPath%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
@@ -438,7 +439,7 @@
         <p class="login-box-msg text-danger">Error al recuperar contraseña</p>
         <form action="" method="post" data-toggle="validator" role="form" id="regForm">
           <div class="form-group has-feedback">
-            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
+            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="<%=contextPath%>/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             <div class="help-block with-errors"></div>
           </div>
@@ -448,17 +449,17 @@
             </div><!-- /.col -->
           </div>
         </form>        
-        <a href="<%=request.getContextPath()%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
+        <a href="<%=contextPath%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({
@@ -482,13 +483,13 @@
     <title><%=eng.getAppName()%> | Recuperar Contraseña</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
-    <link href="<%=request.getContextPath()%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="<%=request.getContextPath()%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="<%=request.getContextPath()%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -500,14 +501,14 @@
   <body class="_register-page">
     <div class="register-box">
       <div class="register-logo">
-        <a href="<%=request.getContextPath()%>/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+        <a href="<%=request.getContextPath()%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div>
 
       <div class="register-box-body">
         <p class="login-box-msg">Recuperar Contraseña</p>
         <form action="" method="post" data-toggle="validator" role="form" id="regForm">
           <div class="form-group has-feedback">
-            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
+            <input type="email" name="email" class="form-control" placeholder="Email" data-remote="<%=contextPath%>/validator/existEmail" data-error="El correo electrónico no se encuentra registrado" required>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             <div class="help-block with-errors"></div>
           </div>
@@ -517,17 +518,17 @@
             </div><!-- /.col -->
           </div>
         </form>        
-        <a href="<%=request.getContextPath()%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
+        <a href="<%=contextPath%>/login" class="text-center">Ya tengo un usuario y contraseña</a>
       </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="<%=request.getContextPath()%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- iCheck -->
-    <script src="<%=request.getContextPath()%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="<%=request.getContextPath()%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({

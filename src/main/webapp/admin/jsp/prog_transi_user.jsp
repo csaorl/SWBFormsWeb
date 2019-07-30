@@ -2,20 +2,22 @@
     Document   : prog_menu
     Created on : 10-feb-2018, 19:57:02
     Author     : javiersolis
---%><%@page import="org.semanticwb.datamanager.DataMgr"%>
+--%><%@page import="org.semanticwb.datamanager.DataObject"%>
+<%@page import="org.semanticwb.datamanager.DataMgr"%>
 <%@page import="org.semanticwb.datamanager.SWBScriptEngine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
     String contextPath = request.getContextPath();     
-    String _title="Menus";
-    String _ds="Page";
-    String _fileName="prog_menus";
+    String _title="Transiciones";
+    String _ds="SWBF_Transition";
+    String _fileName="prog_transi_user";
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);
     //if(!eng.hasUserPermission(_permision))response.sendError(403,"Acceso Restringido...");
 
     String id=request.getParameter("id"); 
     boolean iframe=request.getParameter("iframe")!=null; 
-    boolean detail=request.getParameter("detail")!=null; 
-    boolean add=(id!=null && id.length()==0);
+    
+    DataObject trans=eng.getDataSource("SWBF_Transition").fetchObjById(id);
+    DataObject proc=eng.getDataSource("SWBF_Process").fetchObjById(trans.getString("process"));
        
     if(!iframe)
     {
@@ -28,30 +30,20 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
-        <li>Programación</li>
-        <li <%=detail?"":"class=\"active\""%>><a href="<%=_fileName%>" data-history="#<%=_fileName%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
-<%
-        if(detail)
-        {            
-%>
-        <li class="active"><%=add?"Alta":"Detalle"%></li>
-<%
-        }
-%>        
+        <li>Procesos</li>
+        <li><a href="prog_process?id=<%=proc.getId()%>&mode=detail" data-history="#prog_process" data-target=".content-wrapper" data-load="ajax"><%=proc.getString("name")%></a></li>
+        <li><a href="<%=_fileName%>" data-history="#<%=_fileName%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
+        <li class="active">Detalle</li>
     </ol>
 </section>
 <!-- Main content -->
-<%
-        if(detail)
-        {
-%>            
 <section id="content" class="content">  
     <div class="row">
         <div class="col-md-12" id="main_content">
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#info" data-toggle="tab" aria-expanded="true"><%=add?"Agregar Menu":"Información"%></a></li>
+                    <li class="active"><a href="#info" data-toggle="tab" aria-expanded="true">Transición</a></li>
                     <!--<li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Fields</a></li>-->
                 </ul>
                 <div class="tab-content">
@@ -67,17 +59,6 @@
     </div>
 </section><!-- /.content -->
 <%
-        }else
-        {
-%>
-<section id="content" style="padding: 7px">  
-    <iframe class="ifram_content" src="<%=_fileName%>?iframe=true" frameborder="0" width="100%">Cargando...</iframe>
-    <script type="text/javascript">
-        $(window).resize();
-    </script>                        
-</section><!-- /.content -->
-<%
-        }
     }else 
     {
 %>
@@ -96,103 +77,9 @@
         </script>
         <script type="text/javascript">            
 <%            
-        if(id==null)
+        if(id!=null)
         {
-%>
-            eng.createGrid({
-                gridType: "TreeGrid",
-                autoResize: true,
-                resizeHeightMargin: 20,
-                resizeWidthMargin: 15,
-                canEdit: true,
-                canAdd: true,
-                canRemove: true,
-                //showFilter: true,
-                canReorderRecords: true,
-                canAcceptDroppedRecords: true,
-                
-                sortField: "order",
-                //sortDirection: "descending",
-                
-                appImgDir:"<%=contextPath%>/admin/images/",
-                
-                showRecordComponents: true,
-                showRecordComponentsByCell: true,
-                //recordComponentPoolingMode: "recycle",
-                fields: [
-                    //{name: "id"},
-                    {name: "name"},
-                    //{name: "parentId"},
-                    {name: "smallName"},
-                    {name: "type", width:110},
-                    {name: "iconClass", width:110},
-                    {name: "order", width:70},
-                    {name: "roles_view"},
-                    {name: "status", width:70},
-                    //{name: "roles_add"},
-                    //{name: "roles_update"},
-                    //{name: "roles_remove"},
-                    //{name: "ds"},
-                    //{name: "created"},
-                    //{name: "creator"},
-                    //{name: "updated"},
-                    //{name: "updater"},
-                    {name: "edit", title: " ", width:32, canEdit:false, formatCellValue: function (value) {return " ";}},
-                ],
-                
-                dataProperties:{
-                    loadDataOnDemand:false,
-                    dataArrived:function (parentNode) {
-                        this.openAll();
-                    }
-                },
-
-                createRecordComponent: function (record, colNum) {
-                    var fieldName = this.getFieldName(colNum);
-
-                    if (fieldName == "edit") {
-                        var content=isc.HTMLFlow.create({
-                            width:16,
-                            //height:16,
-                            contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"<%=contextPath%>/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
-                            dynamicContents:true,
-                            click: function () {
-                                //isc.say(record["_id"] + " info button clicked.");
-                                parent.loadContent("<%=_fileName%>?detail=true&id=" + record["_id"],".content-wrapper");
-                                return false;
-                            }
-                        });
-                        return content;
-                    } else {
-                        return null;
-                    }
-                },     
-/*                
-                updateRecordComponent: function (record, colNum, component, recordChanged) {
-                    var fieldName = this.getFieldName(colNum);
-                    if (fieldName == "edit") {
-                        component.addProperties({                     
-                            width:16,
-                            height:16,
-                        });
-                    } else {
-                        return null;
-                    }
-                    return component;
-                },                                          
-*/                
-                addButtonClick: function(event)
-                {
-                    parent.loadContent("<%=_fileName%>?detail=true&id=",".content-wrapper");
-                    return false;
-                },
-
-                
-            }, "<%=_ds%>");
-<%
-        }else
-        {
-            String sid = add?"null":"\"" + id + "\"";
+            String sid = "\"" + id + "\"";
 %>
             var form = eng.createForm({
                 width: "100%",
@@ -205,7 +92,7 @@
                 
                 hasType:function(type)
                 {                    
-                    var val=this.getValue('type')
+                    var val=this.getValue('ptype')
                     if(typeof type === "string")
                     {
                         return val && val.indexOf(type)>-1;
@@ -225,24 +112,21 @@
                 },
                 
                 fields: [
-                    {name: "id", <%=!add?"editorType: \"StaticTextItem\", canEdit:false":"required:true"%>},
                     {name: "name", width:"100%"},
-                    {name: "parentId"},
+                    //{name: "type", redrawOnChange:true},
+                    //{name: "sourceStates"},
                     {name: "smallName", width:"100%"},
-                    {name: "order", width:70},
                     {name: "urlParams", width:"100%"},
-                    {name: "type", redrawOnChange:true},
-                    //{name: "icon"},
+                    {name: "ptype", redrawOnChange:true},
                     {name: "iconClass"},
                     {name: "roles_view", width:"100%"},
                     {name: "status"},                    
                     {name: "path", width:"100%", showIf:"form.hasType(['ajax','iframe','url'])"},
                     {name: "ds", showIf:"form.hasType('sc')"},
-                    {name: "process", showIf:"form.hasType('process')"},
-                    
+                    {name: "asigProp"},     
                     {name: "gd_conf", showIf:"form.hasType('sc_grid_detail')"},
-                    {name: "gridProps", width:"100%", showIf:"form.hasType(['sc_grid','process'])"},
-                    {name: "gridExtProps", width:"100%", showIf:"form.hasType(['sc_grid','process'])", editByCell:true,
+                    {name: "gridProps", width:"100%", showIf:"form.hasType('sc_grid')"},
+                    {name: "gridExtProps", width:"100%", showIf:"form.hasType('sc_grid')", editByCell:true,
                         getEditorProperties:function(editField, editedRecord, rowNum) {
                             if (editField.name == "value")
                             {
@@ -260,8 +144,8 @@
                         }, 
                     },
                     {name: "gridAddiJS", showIf:"form.hasType('sc_grid')"},
-                    {name: "formProps", width:"100%", showIf:"form.hasType(['sc_grid_detail','sc_form','process'])"},
-                    {name: "formExtProps", width:"100%", showIf:"form.hasType(['sc_grid_detail','sc_form','process'])", editByCell:true,
+                    {name: "formProps", width:"100%", showIf:"form.hasType(['sc_grid_detail','sc_form'])"},
+                    {name: "formExtProps", width:"100%", showIf:"form.hasType(['sc_grid_detail','sc_form'])", editByCell:true,
                         getEditorProperties:function(editField, editedRecord, rowNum) {
                             if (editField.name == "value")
                             {
@@ -278,17 +162,14 @@
                             return null;
                         }, 
                     },
-                    {name: "formAddiJS", showIf:"form.hasType(['sc_grid_detail','sc_form','process'])"},
-                    
-                    {name: "roles_add", width:"100%", showIf:"form.hasType('sc')"},
-                    {name: "roles_update", width:"100%", showIf:"form.hasType('sc')"},
-                    {name: "roles_remove", width:"100%", showIf:"form.hasType('sc')"},
-<%if(!add){%>                    
+                    {name: "formAddiJS", showIf:"form.hasType(['sc_grid_detail','sc_form'])"},
+                    {name: "roles_add", width:"100%", showIf:"form.hasType('sc_grid')"},
+                    {name: "roles_update", width:"100%", showIf:"form.hasType('sc_grid')"},
+                    {name: "roles_remove", width:"100%", showIf:"form.hasType('sc_grid')"},
                     {name: "created"},
                     {name: "creator"},
                     {name: "updated"},
                     {name: "updater"},
-<%}%>   
                 ],
           
                 onLoad:function()
@@ -317,7 +198,6 @@
                 eng.submit(form, this, function ()
                 {
                     isc.say("Datos enviados correctamente...", function () {
-                        <%if(add){%>parent.loadContent("<%=_fileName%>?detail=true&id=" + form.values._id,".content-wrapper");<%}%>
                     });
                 });
             };
@@ -326,7 +206,7 @@
                 title: "Regresar",
                 padding: "10px",
                 click: function (p1) {
-                    parent.loadContent("<%=_fileName%>",".content-wrapper");
+                    parent.loadContent("prog_process?mode=detail&id=<%=proc.getId()%>",".content-wrapper");
                     return false;
                 }
             }));

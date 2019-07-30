@@ -5,6 +5,7 @@
 --%><%@page import="org.semanticwb.datamanager.DataMgr"%>
 <%@page import="org.semanticwb.datamanager.SWBScriptEngine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
+    String contextPath = request.getContextPath();     
     String _title="ValueMaps";
     String _ds="ValueMap";
     String _fileName="prog_vm";
@@ -26,7 +27,7 @@
         <small></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <li>Programación</li>
         <li <%=detail?"":"class=\"active\""%>><a href="<%=_fileName%>" data-history="#<%=_fileName%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
 <%
@@ -86,8 +87,8 @@
         <title><%=_title%></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
-        <link href="/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
+        <script src="<%=contextPath%>/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
+        <link href="<%=contextPath%>/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <script type="text/javascript">
@@ -127,7 +128,7 @@
                         var content=isc.HTMLFlow.create({
                             width:16,
                             //height:16,
-                            contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
+                            contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"<%=contextPath%>/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
                             dynamicContents:true,
                             click: function () {
                                 //isc.say(record["_id"] + " info button clicked.");

@@ -194,7 +194,13 @@
         }
     } catch (Throwable e)
     {
-        e.printStackTrace();
+        if(e instanceof jdk.nashorn.internal.runtime.ECMAException)
+        {
+            System.out.println("Script Error:"+e.getMessage());
+        }else
+        {
+            e.printStackTrace();
+        }        
         //System.out.println("Error"+json);
         DataObject ret=SWBDataSource.getError(-1);
         ret.getDataObject("response").addParam("data", e.getMessage());

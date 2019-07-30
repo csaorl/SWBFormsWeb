@@ -6,12 +6,13 @@
 <%@page import="org.semanticwb.datamanager.*"%><%@page contentType="text/html" pageEncoding="UTF-8"%><%!
 
 %><%
+    String contextPath = request.getContextPath();     
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);    
     boolean iframe=request.getParameter("iframe")!=null;     
     //System.out.println(obj);
     String _title="Entity Diagram";
     String _smallName="";
-    String _fileName="/admin/jsp/uml_entity.jsp";
+    String _fileName=contextPath+"/admin/jsp/uml_entity.jsp";
     //if(!eng.hasUserAnyRole(obj.getDataList("roles_view")))response.sendError(403,"Acceso Restringido...");
     
     StringBuilder data=new StringBuilder();
@@ -21,6 +22,7 @@
         DataObjectIterator it=eng.getDataSource("DataSource").find();
         while (it.hasNext()) {
             DataObject obj = it.next();
+            if(!obj.getBoolean("backend") && !obj.getBoolean("frontend"))continue;
             data.append("[");
             data.append(obj.getString("id"));
             data.append("|");
@@ -87,7 +89,7 @@
         <small><%=_smallName%></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <li>Programación</li>
         <li class="active"><a href="<%=_fileName%>" data-history="#<%=_fileName%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
     </ol>
@@ -117,9 +119,9 @@
         </style>
     </head>
     <body>
-        <script src="/admin/utils/nomnoml/lodash.min.js"></script>
-        <script src="/admin/utils/nomnoml/dagre.min.js"></script>
-        <script src="/admin/utils/nomnoml/nomnoml.js"></script>
+        <script src="<%=contextPath%>/admin/utils/nomnoml/lodash.min.js"></script>
+        <script src="<%=contextPath%>/admin/utils/nomnoml/dagre.min.js"></script>
+        <script src="<%=contextPath%>/admin/utils/nomnoml/nomnoml.js"></script>
 
         <canvas id="target-canvas" style="height: 100%"></canvas>
         <script>

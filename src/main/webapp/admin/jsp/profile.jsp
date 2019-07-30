@@ -3,6 +3,7 @@
     Created on : 27-mar-2018, 17:15:56
     Author     : javiersolis
 --%><%@page import="org.semanticwb.datamanager.*"%><%@page contentType="text/html" pageEncoding="UTF-8"%><%
+    String contextPath = request.getContextPath();     
     SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/datasources.js", session);
     DataObject user = eng.getUser();
     
@@ -36,7 +37,7 @@
         Perfil del usuario
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Perfil</li>
     </ol>
 </section>
@@ -50,7 +51,7 @@
             <!-- Profile Image -->
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="/admin/img/user.jpg" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="<%=contextPath%>/admin/img/user.jpg" alt="User profile picture">
                     <h3 class="profile-username text-center"><%=user.getString("fullname")%></h3>
                     <!--<p class="text-muted text-center">Software Engineer</p>-->
                 </div><!-- /.box-body -->

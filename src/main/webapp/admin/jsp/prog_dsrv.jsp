@@ -5,6 +5,7 @@
 --%><%@page import="org.semanticwb.datamanager.DataMgr"%>
 <%@page import="org.semanticwb.datamanager.SWBScriptEngine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
+    String contextPath = request.getContextPath();     
     String _title="DataServices";
     String _ds="DataService";
     String _fileName="prog_dsrv";
@@ -26,7 +27,7 @@
         <small></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <li>Programación</li>
         <li <%=detail?"":"class=\"active\""%>><a href="<%=_fileName%>" data-history="#<%=_fileName%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
 <%
@@ -86,36 +87,36 @@
         <title><%=_title%></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
-        <link href="/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
+        <script src="<%=contextPath%>/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
+        <link href="<%=contextPath%>/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
         
-        <link rel="stylesheet" href="/static/plugins/codemirror/lib/codemirror.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/hint/show-hint.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/theme/eclipse.css">   
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/dialog/dialog.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/lint/lint.css">  
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/hint/show-hint.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/theme/eclipse.css">   
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/lint/lint.css">  
         
 
-        <script src="/static/plugins/codemirror/lib/codemirror.js"></script>  
-        <script src="/static/plugins/codemirror/addon/hint/show-hint.js"></script>
-        <script src="/static/plugins/codemirror/addon/selection/active-line.js"></script> 
-        <script src="/static/plugins/codemirror/addon/lint/lint.js"></script>       
-        <script src="/static/plugins/codemirror/addon/search/search.js"></script> 
-        <script src="/static/plugins/codemirror/addon/search/searchcursor.js"></script>
-        <script src="/static/plugins/codemirror/addon/dialog/dialog.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/lib/codemirror.js"></script>  
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/show-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/selection/active-line.js"></script> 
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/lint.js"></script>       
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/search/search.js"></script> 
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/search/searchcursor.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.js"></script>
         
                 
-        <script src="/static/plugins/codemirror/mode/javascript/javascript.js"></script>
-        <script src="/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
-        <script src="/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/javascript/javascript.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/hint/javascript-hint.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/lint/javascript-lint.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
                 
-        <script src="/static/plugins/codemirror/addon/edit/matchbrackets.js"></script>
-        <script src="/static/plugins/codemirror/addon/edit/closebrackets.js"></script>
-        <script src="/static/plugins/codemirror/addon/comment/continuecomment.js"></script>
-        <script src="/static/plugins/codemirror/addon/comment/comment.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/edit/matchbrackets.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/edit/closebrackets.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/comment/continuecomment.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/addon/comment/comment.js"></script>
                 
-        <script src="/static/plugins/codemirror/mode/clike/clike.js"></script>
+        <script src="<%=contextPath%>/static/plugins/codemirror/mode/clike/clike.js"></script>
                 
     </head>
     <body>
@@ -139,10 +140,17 @@
                 showRecordComponents: true,
                 showRecordComponentsByCell: true,
                 //recordComponentPoolingMode: "recycle",
+                
+                canSort: false, // Disable user sorting because we rely on records being sorted by userOrder.
+                sortField: "order",
+                
                 fields: [
                     {name: "id"},
+                    {name: "description"},
                     {name: "dataSources"},
                     {name: "actions"},
+                    {name: "order", width:80},
+                    {name: "active", width:50},
                     //{name: "service"},
                     //{name: "created"},
                     //{name: "creator"},
@@ -158,7 +166,7 @@
                         var content=isc.HTMLFlow.create({
                             width:16,
                             //height:16,
-                            contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
+                            contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"<%=contextPath%>/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
                             dynamicContents:true,
                             click: function () {
                                 //isc.say(record["_id"] + " info button clicked.");
@@ -217,8 +225,11 @@
                 
                 fields: [
                     {name: "id"},
+                    {name: "description", stype:"text"},
                     {name: "dataSources"},
                     {name: "actions"},
+                    {name: "order"},
+                    {name: "active", width:50},
                     {name: "service", height:300},
 <%if(!add){%>                    
                     {name: "created"},
@@ -248,7 +259,7 @@
                         lint: true,
                     }); 
                     
-                    myCodeMirror.on('change',function(cm){
+                    myCodeMirror.on('blur',function(cm){
                         // get value right from instance
                         form.setValue(prop,cm.getValue());
                     });

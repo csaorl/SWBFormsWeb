@@ -16,6 +16,7 @@ eng.dataExtractors["Test"] = {
             print(this);
             print(base);
             //base.store({});       //store data in dataSource
+            print(new java.util.Date().getTime());
         },
         stop:function(base)
         {

@@ -5,6 +5,7 @@
 --%><%@page import="org.semanticwb.datamanager.DataMgr"%>
 <%@page import="org.semanticwb.datamanager.SWBScriptEngine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
+    String contextPath = request.getContextPath();     
     String _title="Validator";
     String _ds="Validator";
     String _fileName="prog_valid";
@@ -23,7 +24,7 @@
         <small></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <li>Programación</li>
         <li class="active"><%=_title%></li>
     </ol>
@@ -46,8 +47,8 @@
         <title><%=_title%></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
-        <link href="/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
+        <script src="<%=contextPath%>/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
+        <link href="<%=contextPath%>/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <script type="text/javascript">

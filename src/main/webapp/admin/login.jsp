@@ -4,7 +4,8 @@
     Author     : javiersolis
 --%>
 <%@page import="org.semanticwb.datamanager.*"%><%
-    SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/base.js",session);
+    String contextPath = request.getContextPath();
+    SWBScriptEngine eng=DataMgr.initPlatform("/WEB-INF/global.js",session);
     String email=request.getParameter("email");
     String password=request.getParameter("password");
     //System.out.println(email+" "+password);
@@ -24,7 +25,7 @@
     
     if(null!=request.getParameter("logout")){
         request.getSession().invalidate();
-        response.sendRedirect(request.getContextPath() + "/");
+        response.sendRedirect(contextPath + "/");
     }
     if(email!=null && password!=null)
     {        
@@ -46,7 +47,7 @@
             session.setAttribute("_USER_", rdata.get(0));
             String path=(String)request.getAttribute("servletPath");
             if(path==null || path.equals("/login"))path="/";
-            response.sendRedirect(path);
+            response.sendRedirect(contextPath+path);
             return;
         }else
         {
@@ -60,19 +61,19 @@
     <title><%=eng.getAppName()%> | Log in</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
-    <link href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+    <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
     <!-- Font Awesome Icons -->
-    <link href="/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
-    <link href="/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
-    <link href="/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-    <link href="/admin/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="<%=contextPath%>/admin/css/login.css" rel="stylesheet" type="text/css" />
   </head>
   <body class="login-page">
     <div class="login-box">
       <div class="login-logo">
-          <a href="/"><img src="/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
+          <a href="<%=contextPath%>/"><img src="<%=contextPath%>/admin/img/logo.png" width="320" alt="<%=eng.getAppName()%>"></a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Introduce tus credenciales para comenzar tu sesión</p>
@@ -99,18 +100,18 @@
           <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
         </div><!-- /.social-auth-links -->
 
-        <a href="/passwordRecovery">Olvidé mi contraseña</a><br>
-        <a href="/register" class="text-center">Registrarme como nuevo usuario</a>
+        <a href="<%=contextPath%>/passwordRecovery">Olvidé mi contraseña</a><br>
+        <a href="<%=contextPath%>/register" class="text-center">Registrarme como nuevo usuario</a>
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>  
+    <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>  
     <!-- iCheck -->
-    <script src="/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script>
       $(function () {
         $('input').iCheck({

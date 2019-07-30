@@ -1,6 +1,11 @@
 var _modelid = "SWBForms";
 var _dataStore = "mongodb";
 
+//******* Validations ************
+eng.validators["unique"] = {type: "isUnique", errorMessage: "El valor del campo debe de ser único"};
+eng.validators["id"] = {type: "regexp", expression: "^([a-zA-Z0-9_+])+$", errorMessage: "Identificador no valido"};
+eng.validators["email"] = {type: "regexp", expression: "^([a-zA-Z0-9_.\\-+])+@(([a-zA-Z0-9\\-])+\\.)+[a-zA-Z0-9]{2,4}$", errorMessage: "Correo electrónico invalido"};
+
 eng.config = {
     baseDatasource: "/WEB-INF/global.js",
     appName: "SWBForms",
@@ -31,6 +36,10 @@ eng.config = {
 eng.dataStores["mongodb"] = {
     host: "localhost",
     port: 27017,
+    //clientURI="mongodb://user1:pwd1@host1/?authSource=db1&ssl=true",          //Connection by clientURI
+    //envHost="host";                                                           //host defined by enviroment variable
+    //envPort="port";                                                           //port defined by enviroment variable
+    //envClientURI="clientURI";                                                 //clientURI defined by enviroment variable
     class: "org.semanticwb.datamanager.datastore.DataStoreMongo",
 };
 
@@ -101,7 +110,7 @@ eng.dataSources["Permission"]={
 eng.dataProcessors["UserProcessor"] = {
     dataSources: ["User"],
     actions: ["fetch", "add", "update"],
-    request: function (request, dataSource, action)
+    request: function (request, dataSource, action, trxParams)
     {
         if (request.data && request.data.password)
         {
@@ -145,7 +154,8 @@ eng.dataSources["Log"] = {
 eng.dataProcessors["DefPropertiesProcessor"] = {
     dataSources: ["*"],
     actions: ["add", "update"],
-    request: function (request, dataSource, action)
+    order: -999,
+    request: function (request, dataSource, action, trxParams)
     {
         if (dataSource !== "Log" && dataSource !== "DSCounter")
         {
@@ -221,41 +231,15 @@ eng.dataProcessors["DefPropertiesProcessor"] = {
                     }
                 }
             }
+            if (request.data._swbf_processAction !== null)
+            {
+                var err=this.getProcessMgr().processAction(this,request.data,trxParams);
+                if(err!=null)throw err;
+            }
         }
         return request;
     },
 };
 
-
-//******* DataProcessors ************
-/*
- eng.dataServices["LogsService"] = {
- dataSources: ["*"],
- actions:["add","remove","update"],
- service: function(request, response, dataSource, action)
- {
- //print("user:"+this.user+" dataSource:"+dataSource+" action:"+action+" request:"+request.data);
- if(dataSource!=="Log" && dataSource!=="DSCounter" && dataSource!=="DeviceData")
- {
- 
- var data={
- source:this.source,
- //user:this.user.login,
- dataSource:dataSource,
- action:action,
- data:[request.data],
- timestamp:new java.util.Date().getTime(),
- };
- print(this.user);
- print(data);
- if(this.user)
- {
- data.user=this.user.email;
- data.userIp=this.user.ip;
- }
- //print("saveLog:"+data);
- this.getDataSource("Log").addObj(data);
- }
- }
- };
- */
+//implementación del lado del eng.js (cliente)
+eng.getProcessStates=function(){return {}};

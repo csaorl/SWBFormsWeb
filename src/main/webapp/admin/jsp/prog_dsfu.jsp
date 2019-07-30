@@ -114,6 +114,7 @@
         return list;
     }
 %><%
+    String contextPath = request.getContextPath();     
     SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/admin.js", session);
     DataObject user = eng.getUser();
     
@@ -211,21 +212,36 @@
                                 if(fname!=null && fname.length()>0)
                                 {
                                     ScriptObject field=ds.getScriptField(fname);
-                                    if(field.getString("type").equals("int"))
+                                    if(field!=null)
                                     {
-                                        obj.addParam(fname, Integer.parseInt(record.get(x).trim()));  
-                                    }else if(field.getString("type").equals("long"))
-                                    {
-                                        obj.addParam(fname, Long.parseLong(record.get(x).trim()));                                
-                                    }else if(field.getString("type").equals("double"))
-                                    {
-                                        obj.addParam(fname, Double.parseDouble(record.get(x).trim()));                                
-                                    }else if(field.getString("type").equals("float"))
-                                    {
-                                        obj.addParam(fname, Float.parseFloat(record.get(x).trim()));                                
-                                    }else
-                                    {
-                                        obj.addParam(fname, record.get(x).trim());  
+                                        if(field.getString("type").equals("int"))
+                                        {
+                                            int n=0;
+                                            String str=record.get(x).trim().replace(",","");
+                                            if(!str.isEmpty() && !str.equals("-"))n=Integer.parseInt(str);                                            
+                                            obj.addParam(fname, n);  
+                                        }else if(field.getString("type").equals("long"))
+                                        {
+                                            long n=0;
+                                            String str=record.get(x).trim().replace(",","");
+                                            if(!str.isEmpty() && !str.equals("-"))n=Long.parseLong(str);                                            
+                                            obj.addParam(fname, n);                                
+                                        }else if(field.getString("type").equals("double"))
+                                        {
+                                            double n=0;
+                                            String str=record.get(x).trim().replace(",","");
+                                            if(!str.isEmpty() && !str.equals("-"))n=Double.parseDouble(str);                                          
+                                            obj.addParam(fname, n);                                                                                         
+                                        }else if(field.getString("type").equals("float"))
+                                        {
+                                            float n=0;
+                                            String str=record.get(x).trim().replace(",","");
+                                            if(!str.isEmpty() && !str.equals("-"))n=Float.parseFloat(str);                                          
+                                            obj.addParam(fname, n);                                                                                         
+                                        }else
+                                        {
+                                            obj.addParam(fname, record.get(x).trim());  
+                                        }
                                     }
                                 }
                             }
@@ -246,7 +262,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> 
+        <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> 
         <title>JSP Page</title>
     </head>
     <body>
@@ -282,9 +298,9 @@
         </div>        
 
         <!-- jQuery 2.1.4 -->
-        <script src="/static/admin/bower_components/jquery/dist/jquery.min.js"></script>        
+        <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>        
         <!-- Bootstrap 3.3.2 JS -->
-        <script src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>   
+        <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>   
 
         <script type="text/javascript">
             function bs_input_file() {

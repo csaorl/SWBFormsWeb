@@ -1,14 +1,14 @@
 <%-- 
-    Document   : prog_menu
+    Document   : prog_process
     Created on : 10-feb-2018, 19:57:02
     Author     : javiersolis
 --%><%@page import="org.semanticwb.datamanager.DataMgr"%>
 <%@page import="org.semanticwb.datamanager.SWBScriptEngine"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%
     String contextPath = request.getContextPath();     
-    String _title="DataSources";
-    String _ds="DataSource";
-    String _fileName="prog_ds";
+    String _title="Processes";
+    String _ds="SWBF_Process";
+    String _fileName="prog_process";
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);
     //if(!eng.hasUserPermission(_permision))response.sendError(403,"Acceso Restringido...");
     
@@ -56,11 +56,11 @@
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#info" data-toggle="tab" ondblclick="f_info.src='<%=_fileName%>?iframe=true&mode=detail&id=<%=id%>'"><%=add?"Agregar DataSource":"Información"%></a></li>
+                    <li class="active"><a href="#info" data-toggle="tab" ondblclick="f_info.src='<%=_fileName%>?iframe=true&mode=detail&id=<%=id%>'"><%=add?"Agregar Proceso":"Información"%></a></li>
 <%if(!add){%>
-                    <li><a href="#fields" data-toggle="tab" ondblclick="f_fields.src='<%=_fileName%>?iframe=true&mode=fields&id=<%=id%>'" onclick="this.onclick=undefined;this.ondblclick();">Propiedades</a></li>
-                    <li><a href="#data" data-toggle="tab" ondblclick="f_data.src='<%=_fileName%>?iframe=true&mode=data&id=<%=id%>'" onclick="this.onclick=undefined;this.ondblclick();">Datos</a></li>
-                    <li><a href="#import" data-toggle="tab" ondblclick="f_import.src='prog_dsfu?id=<%=id%>'" onclick="this.onclick=undefined;this.ondblclick();">Importar</a></li>
+                    <li><a href="#states" data-toggle="tab" ondblclick="f_states.src='<%=_fileName%>?iframe=true&mode=states&id=<%=id%>'" onclick="this.onclick=undefined;this.ondblclick();">Estados</a></li>
+                    <li><a href="#transitions" data-toggle="tab" ondblclick="f_transitions.src='<%=_fileName%>?iframe=true&mode=transitions&id=<%=id%>'" onclick="this.onclick=undefined;this.ondblclick();">Transiciones</a></li>
+                    <li><a href="#model" data-toggle="tab" ondblclick="f_model.src='uml_process?iframe=true&id=<%=id%>&doc=true'" onclick="this.onclick=undefined;this.ondblclick();">Diagrama</a></li>
 <%}%>
                 </ul>
                 <div class="tab-content">
@@ -68,14 +68,14 @@
                         <iframe id="f_info" class="ifram_content" src="<%=_fileName%>?iframe=true&mode=detail&id=<%=id%>" frameborder="0" width="100%">Cargando...</iframe>
                     </div><!-- /.tab-pane -->
 <%if(!add){%>
-                    <div class="tab-pane" id="fields">
-                        <iframe id="f_fields" class="ifram_content" frameborder="0" width="100%">Cargando...</iframe>
+                    <div class="tab-pane" id="states">
+                        <iframe id="f_states" class="ifram_content" frameborder="0" width="100%">Cargando...</iframe>
                     </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="data">
-                        <iframe id="f_data" class="ifram_content" frameborder="0" width="100%">Cargando...</iframe>
+                    <div class="tab-pane" id="transitions">
+                        <iframe id="f_transitions" class="ifram_content" frameborder="0" width="100%">Cargando...</iframe>
                     </div><!-- /.tab-pane -->
-                    <div class="tab-pane" id="import">
-                        <iframe id="f_import" class="ifram_content" frameborder="0" width="100%">Cargando...</iframe>
+                    <div class="tab-pane" id="model">
+                        <iframe id="f_model" class="ifram_content" frameborder="0" width="100%">Cargando...</iframe>
                     </div><!-- /.tab-pane -->
 <%}%>
                 </div><!-- /.tab-content -->
@@ -136,14 +136,9 @@
                 //recordComponentPoolingMode: "recycle",
                 fields: [
                     {name: "id", canEdit:false},
+                    {name: "name"},
                     {name: "description"},
-                    {name: "backend"},
-                    {name: "frontend"},        
-                    {name: "roles_fetch"},
-                    {name: "roles_add"},
-                    {name: "roles_update"},
-                    {name: "roles_remove"},   
-                    
+                    {name: "ds", canEdit:false},
                     {name: "edit", title: " ", width:32, canEdit:false, formatCellValue: function (value) {return " ";}},
                 ],
 
@@ -177,7 +172,7 @@
                 
             }, "<%=_ds%>");
 <%
-        }else if("fields".equals(mode))
+        }else if("transitions".equals(mode))
         {
 %>
             var grid=eng.createGrid({
@@ -191,23 +186,41 @@
                 //canReorderRecords: true,
                 //canAcceptDroppedRecords: true,
                 
+                showRecordComponents: true,
+                showRecordComponentsByCell: true,                
+                
                 expansionFieldImageShowSelected:true,
                 canExpandRecords: true,
-                
-                canSort: false, // Disable user sorting because we rely on records being sorted by userOrder.
-                sortField: "order",
-                
-                initialCriteria: {"ds":"<%=id%>"},
+                                
+                initialCriteria: {"process":"<%=id%>"},
                 fields: [
-                    //{name: "ds"},
                     {name: "name"},
-                    {name: "title"},
-                    {name: "type"},        
-                    {name: "description", length: 500},        
-                    {name: "example"},        
-                    {name: "required"},
-                    {name: "order", width:70},
+                    {name: "type"},
+                    {name: "sourceStates"},
+                    {name: "dateProp"},
+                    {name: "edit", title: " ", width:32, canEdit:false, formatCellValue: function (value) {return " ";}},
                 ],
+                        
+                createRecordComponent: function (record, colNum) {
+                    var fieldName = this.getFieldName(colNum);
+
+                    if (fieldName == "edit") {
+                        var content=isc.HTMLFlow.create({
+                            width:16,
+                            //height:16,
+                            contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"<%=contextPath%>/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
+                            dynamicContents:true,
+                            click: function () {
+                                //isc.say(record["_id"] + " info button clicked.");
+                                parent.loadContent("prog_transi_"+record["type"]+"?id=" + record["_id"],".content-wrapper");
+                                return false;
+                            }
+                        });
+                        return content;
+                    } else {
+                        return null;
+                    }
+                },                             
                         
                 getExpansionComponent : function (record) 
                 {
@@ -218,42 +231,21 @@
                         canRemove: true,
                         showFilter: false,
                         editByCell: true,
-                        initialCriteria: {"dsfield":record._id},
+                        initialCriteria: {"process":record.process, "transition":record._id},
                         fields: [
-                            //{name: "dsfield"},
-                            {name: "att"},
-                            {name: "type"},
-                            {name: "value"},
-                        ],
-                        getEditorProperties:function(editField, editedRecord, rowNum) {
-                            //console.log("getEditorProperties",this,this.getSelectedRecord().type,editField,editedRecord,rowNum);
-                            if (editField.name == "value")
-                            {
-                                if(editedRecord!=null) {
-                                    var item=ds_field_atts_vals[editedRecord.att];                                     
-                                    var act=this.getSelectedRecord();
-                                    if(act)
-                                    {
-                                        if(item.type!=act.type)
-                                        {
-                                            item.type=act.type;
-                                        }
-                                    }                                    
-                                    editField._lastItem=item;
-                                    //console.log(item);                                    
-                                    return item;
-                                }else
-                                {
-                                    return editField._lastItem;
-                                }
-                            } 
-                            return null;
-                        },                        
-                    }, "<%=_ds%>FieldsExt");  
+                            //{name: "process"},
+                            //{name: "transition"},
+                            {name: "action"},
+                            {name: "title"},
+                            {name: "states"},
+                            {name: "description"},
+                            {name: "help"}
+                        ],                                               
+                    }, "SWBF_TransitionStates");  
                     return grd;
                 }                        
                 
-            }, "<%=_ds%>Fields");    
+            }, "SWBF_Transition");    
             
             
             function createWidow(grid)
@@ -380,7 +372,7 @@
             _toolStrip.addMember(_copyProp,3);            
 
 <%
-        }else if("data".equals(mode))
+        }else if("states".equals(mode))
         {
 %>
                 var grid=eng.createGrid({
@@ -390,8 +382,43 @@
                     canEdit: true,
                     canAdd: true,
                     canRemove: true,
-                    showFilter: true,      
-                }, "<%=id.substring(id.lastIndexOf(":") + 1)%>");    
+                    showFilter: true,   
+                    initialCriteria:{"process":"<%=id%>"},
+                    
+                    showRecordComponents: true,
+                    showRecordComponentsByCell: true,                
+                                                
+                    fields:[
+                        {name: "name"},
+                        {name: "description"},
+                        {name: "ds"},        
+                        {name: "prop"},        
+                        {name: "value"},              
+                        {name: "edit", title: " ", width:32, canEdit:false, formatCellValue: function (value) {return " ";}},
+                    ],                            
+                            
+                    createRecordComponent: function (record, colNum) {
+                        var fieldName = this.getFieldName(colNum);
+
+                        if (fieldName == "edit") {
+                            var content=isc.HTMLFlow.create({
+                                width:16,
+                                //height:16,
+                                contents:"<img style=\"cursor: pointer;\" width=\"16\" height=\"16\" src=\"<%=contextPath%>/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
+                                dynamicContents:true,
+                                click: function () {
+                                    //isc.say(record["_id"] + " info button clicked.");
+                                    parent.loadContent("prog_state?id=" + record["_id"],".content-wrapper");
+                                    return false;
+                                }
+                            });
+                            return content;
+                        } else {
+                            return null;
+                        }
+                    },                
+                
+                }, "SWBF_State");    
 <%
         }else
         {
@@ -427,19 +454,10 @@
                 },
                 fields: [
                     {name: "id", change:"form.setValue('scls',value)", <%=!add?"editorType: \"StaticTextItem\", canEdit:false":"required:true"%>},
+                    {name: "name", width:"100%"},
                     {name: "description", width:"100%", type:"text"},
-                    {name: "scls"},
-                    {name: "modelid", hint:"_modelid", showHintInField:true},
-                    {name: "dataStore", hint:"_dataStore", showHintInField:true},
-                    {name: "displayField"},
-                    //{name: "valueField"},
-                    //{name: "sortField"},
-                    {name: "backend"},
-                    {name: "frontend"},        
-                    {name: "roles_fetch", width:"100%"},
-                    {name: "roles_add", width:"100%"},
-                    {name: "roles_update", width:"100%"},
-                    {name: "roles_remove", width:"100%"},                     
+                    {name: "ds"},
+                    {name: "initTransition"},
 <%if(!add){%>                    
                     {name: "created"},
                     {name: "creator"},

@@ -284,6 +284,118 @@ eng.fieldProcesors["select"] = function(field)
     return base;
 };
 
+eng.fieldProcesors["multiSelect"] = function(field)
+{
+    var base = eng.utils.cloneObject(field);
+    base.multiple=true;    
+
+    var dsObjDef = eng.getDataSourceObjDef(eng.utils.removeAttribute(base, "dataSource"));
+    var dsf;
+    var dsfmt;
+    if(dsObjDef.dsName)
+    {
+      	var ds = eng.createDataSource(dsObjDef,true,base);
+      	dsObjDef.ds=ds;
+        if(ds==null)console.log("Undefined DS:",dsObjDef,field);
+        else 
+        {
+          	//console.log(ds);
+            dsf=ds.displayField;
+            dsfmt=ds.displayFormat;
+            ds.canQueueRequests=false;
+        }
+    }
+    
+    if(base.displayFormat)dsfmt=base.displayFormat;  
+    
+    if (!base.editorType)
+        base.editorType = "MultiComboBoxItem";    
+    
+    if(!base.valueField)base.valueField="_id";
+    
+    base.displayField=dsf;
+    if(dsfmt)
+    {
+        base.formatValue= function (value, baserecord, form, item) 
+        {   
+            var record = item.getSelectedRecord();
+            if (record) {
+                //console.log("formatValue:"+value,record,dsfmt,item,this);
+                if("function" == typeof dsfmt)
+                {
+                    return dsfmt(value, record);
+                }else
+                {
+                    return eval(dsfmt);
+                }
+            } else {
+               return value;
+            }
+        };        
+    }
+    
+    base.optionDataSource= dsObjDef.dsId;
+        
+    if(!base.comboBoxProperties)base.comboBoxProperties={};     
+    
+    //console.log("1:",base.editorProperties.sortField,!base.editorProperties.sortField,!(base.editorProperties.sortField===null));
+    
+    if(!base.comboBoxProperties.displayField)base.comboBoxProperties.displayField=dsf;
+    if(!base.comboBoxProperties.addUnknownValues)base.comboBoxProperties.addUnknownValues=false; 
+    
+    if(!base.comboBoxProperties.sortField){
+        if(base.comboBoxProperties.sortField===null){
+            delete base.comboBoxProperties.sortField
+        }else 
+        {
+            base.comboBoxProperties.sortField=dsf;
+        }
+    }
+    
+    //console.log(base.textMatchStyle);
+    if(base.textMatchStyle)
+    {
+        base.comboBoxProperties.textMatchStyle=base.textMatchStyle;  
+    }else if(!base.comboBoxProperties.textMatchStyle)
+    {
+        base.comboBoxProperties.textMatchStyle="substring";
+    }    
+    
+    //console.log(base.name,JSON.stringify(base.editorProperties.sortField));
+    
+    if(base.getFilterCriteria)
+    {
+        base.comboBoxProperties.getPickListFilterCriteria=eng.utils.removeAttribute(base, "getFilterCriteria");
+    }
+
+    if (base.showFilter)
+    {
+        base.comboBoxProperties.pickListProperties = {
+            showFilterEditor: eng.utils.removeAttribute(base, "showFilter")
+        };
+    }
+
+    //Campos a mostrar en el despliegue del select (en forma de grid dentro del combo)
+    if (base.selectFields)
+    {
+        base.comboBoxProperties.pickListFields = eng.utils.removeAttribute(base, "selectFields");
+    }
+
+    //Tamaño del select una vez desplegado
+    if (base.selectWidth)
+    {
+        base.comboBoxProperties.pickListWidth = eng.utils.removeAttribute(base, "selectWidth");
+    }
+    
+    //Filtrar el resultado del select for un criterio inicial estatico
+    if(base.initialCriteria)
+    {
+        base.optionCriteria = eng.utils.removeAttribute(base, "initialCriteria");
+    }
+
+    return base;    
+}
+
 eng.fieldProcesors["grid"] = function(field)
 {
     var base = eng.utils.cloneObject(field);
@@ -516,6 +628,23 @@ eng.fieldProcesors["html"] = function(field)
         base.colSpan = 5;
     if (!base.showTitle)
         base.showTitle=true;
+    return base;
+};
+
+eng.fieldProcesors["googleMaps"] = function(field)
+{
+    var base = eng.utils.cloneObject(field);
+
+    if (!base.editorType)
+        base.editorType = "GoogleMapsItem";
+    if (!base.width)
+        base.width = "100%";
+    if (!base.height)
+        base.height = "300";
+    if (!base.startRow)
+        base.startRow = true;
+    if (!base.colSpan)
+        base.colSpan = 5;
     return base;
 };
 
@@ -1159,7 +1288,7 @@ isc.FileUpload.addProperties({
     
     initUploader:function(canvas)
     {
-        console.log("initUploader");                
+        console.log("initUploader:",this.ID);                
         
         var div=document.createElement("div");
         div.innerHTML=
@@ -1167,6 +1296,8 @@ isc.FileUpload.addProperties({
             "    <button id=\""+this.ID+"_button\">Elegir Archivos</button> \n" +
             "</div>\n";
     
+        var old=document.getElementById(this.ID+"_container");
+        if(old)old.remove();
         document.body.appendChild(div);        
         
         var uploader = new plupload.Uploader({
@@ -1562,3 +1693,72 @@ isc.ListGridSelectItem.addProperties({
     }    
 });
 
+//*********** GoogleMapsItem ***********************************
+isc.ClassFactory.defineClass("GoogleMapsItem", isc.CanvasItem);
+isc.GoogleMapsItem.addProperties({
+    shouldSaveValue:true,
+    createCanvas: function() {
+        this.gmapsID = this.ID+'_map';
+        this.dataSource = eng.createDataSource(this.dsDef,true,this);
+        var c = isc.VLayout.create({
+            members:[
+                isc.HTMLFlow.create({
+                    width:"100%",
+                    height:"*",
+                    contents:'<input id="pac-input_'+this.ID+'" class="searchBoxGoogleMaps" style="width:50%;" type="text" placeholder="Buscar calle">'
+                }),
+                isc.HTMLFlow.create({
+                    width:"100%",
+                    height:"*",
+                    contents:'<div class="boxedGoogleMaps" style="width:'+this.width+'px;height:'+this.height+'px;">\n\
+                                <div id="'+this.gmapsID+'" style="width:99%;height:99%;"></div>\n\
+                            </div>'
+                }),
+                isc.HTMLFlow.create({
+                    width:"100%",
+                    height:"*",
+                    contents:'<div><input onclick="deleteMarkers();" type=button value="Borrar marcas"></div>'
+                })
+            ]
+        });
+        
+        document.write('<script type="text/javascript" async defer>\n');
+        document.write('var map,markers=[];');
+        document.write('function initMap_'+this.ID+'(){var townDown={lat:19.432692,lng:-99.133434};map=new google.maps.Map(document.getElementById("'+this.gmapsID+'"),{zoom:12,center:townDown,mapTypeId:google.maps.MapTypeId.ROADMAP,styles:[{featureType:"poi",stylers:[{visibility:"off"}]},{featureType:"transit.station",stylers:[{visibility:"off"}]}],disableDoubleClickZoom:true,streetViewControl:false});map.addListener("dblclick",function(event){addMarker(event.latLng);'+this.ID+'.setCenter(this)});');
+        document.write('var input=document.getElementById("pac-input_'+this.ID+'");var searchBox=new google.maps.places.SearchBox(input);map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);');
+        document.write('map.addListener("bounds_changed",function(){searchBox.setBounds(map.getBounds());});');
+        //document.write('var markers_=[];');
+        document.write('searchBox.addListener("places_changed",function(){var places=searchBox.getPlaces();if(places.length==0){return;}');
+        //document.write('markers_.forEach(function(marker){marker.setMap(null);});markers_=[];');
+        document.write('var bounds=new google.maps.LatLngBounds();');
+        document.write('places.forEach(function(place){');
+        document.write('var icon={url:place.icon,size:new google.maps.Size(71,71),origin:new google.maps.Point(0,0),anchor:new google.maps.Point(17,34),scaledSize:new google.maps.Size(25,25)};');
+        //document.write('markers_.push(new google.maps.Marker({map:map,icon:icon,title:place.name,position:place.geometry.location}));');
+        document.write('if(place.geometry.viewport){bounds.union(place.geometry.viewport);}else{bounds.extend(place.geometry.location);}});');
+        document.write('map.fitBounds(bounds);});');
+        document.write('}\n');
+        document.write('function addMarker(location){var marker=new google.maps.Marker({position:location,map: map});markers.push(marker);map.setCenter(location);}');
+        document.write('function deleteMarkers(){for(var i=0;i<markers.length;i++){markers[i].setMap(null);}markers=[];}');
+        //document.write('initMap_'+this.ID+'();');
+        document.write('<\/script>');      
+        
+        if(this.mapping===1) {
+            //document.write('<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAt_eGxLL6XMpo28l-kD-n23iW-LUiZmKs&libraries=places&callback=initMap_'+this.ID+'" async defer><\/script>');
+            document.write('<script src="https://maps.googleapis.com/maps/api/js?key='+this.apiKey+'&libraries=places&callback=initMap_'+this.ID+'" async defer><\/script>');
+        }
+        return c;
+    },
+    setCenter: function(position) {
+        this.form.setValue(this.name,'{"lat":'+position.center.lat()+',"lng":'+position.center.lng()+'}');
+    },
+    showValue: function(displayValue, dataValue, form, self) {
+        if(self) {
+            if(self.getValue() && self.getValue()!==null) {
+                var pos = JSON.parse(self.getValue());
+                var marker = new google.maps.Marker({position:pos, map:map});
+                markers.push(marker);
+                map.setCenter(pos);
+            }
+        }
+    }
+});

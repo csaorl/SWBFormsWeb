@@ -14,9 +14,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Create Programmer User</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Your user has now programmer role...</h1>
     </body>
 </html>

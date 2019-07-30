@@ -238,8 +238,8 @@
         DataObject query=json.getDataObject("query");
         Object fields=json.get("fields");
         if(fields==null)fields=getFieldsNames(ds,Boolean.parseBoolean(fl));
-        DataList fieldsTitles=getFieldsTitles(fields,ds);        
-        DataList fieldsTypes=getFieldsTypes(fields,ds);        
+        DataList fieldsTitles=getFieldsTitles(fields,ds);
+        DataList fieldsTypes=getFieldsTypes(fields,ds);
         if(query==null)query=new DataObject();
         //out.println(ds.fetch(query));
         //out.println(header);

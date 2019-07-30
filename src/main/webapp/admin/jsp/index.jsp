@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%><%!
 
 %><%
+    String contextPath = request.getContextPath();
     SWBScriptEngine eng = DataMgr.initPlatform("/admin/ds/datasources.js", session);
     DataObject user = eng.getUser();
     String token=user.getString("token");
@@ -16,57 +17,57 @@
         <title><%=eng.getAppName()%> | Dashboard</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.4 -->
-        <link href="/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
-        <link href="/static/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+        <link href="<%=contextPath%>/static/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
 
         <!-- FontAwesome 4.5.0 -->
-        <link href="/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="/static/plugins/fontawesome-iconpicker-1.3.1/css/fontawesome-iconpicker.min.css">
+        <link href="<%=contextPath%>/static/admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/fontawesome-iconpicker-1.3.1/css/fontawesome-iconpicker.min.css">
         <!-- Ionicons 2.0.0 -->
-        <link href="/static/admin/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css" />   
+        <link href="<%=contextPath%>/static/admin/bower_components/Ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css" />   
         <!-- DataTables -->
-        <link rel="stylesheet" href="/static/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">        
+        <link rel="stylesheet" href="<%=contextPath%>/static/admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">        
               <!-- Theme style -->
-        <link href="/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
         <!-- AdminLTE Skins. Choose a skin from the css/skins 
              folder instead of downloading all of them to reduce the load. -->
-        <link href="/static/admin/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
         <!-- Pace style -->
-        <link href="/static/admin/plugins/pace/pace.min.css" rel="stylesheet" type="text/css" >        
+        <link href="<%=contextPath%>/static/admin/plugins/pace/pace.min.css" rel="stylesheet" type="text/css" >        
         <!-- iCheck -->
-        <link href="/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
         <!-- Morris chart -->
         <!--        
-                <link href="/static/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+                <link href="<%=contextPath%>/static/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
         -->
         <!-- jvectormap -->
-        <link href="/static/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
         <!-- Date Picker -->
-        <link href="/static/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
         <!-- Daterange picker -->
-        <link href="/static/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
-        <link href="/static/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 
-        <link href="/static/plugins/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/plugins/bootstrap-switch/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
         
-        <link href="/static/admin/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/static/admin/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
 
-        <link rel="stylesheet" href="/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/bootstrap-select/css/bootstrap-select.min.css">
         
         <!-- FileInputPlugin -- >
-        <link href="/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="<%=contextPath%>/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
         -->
 <!--        
-        <link rel="stylesheet" href="/static/plugins/codemirror/lib/codemirror.css"> 
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/hint/show-hint.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/theme/eclipse.css">   
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/dialog/dialog.css">
-        <link rel="stylesheet" href="/static/plugins/codemirror/addon/lint/lint.css">         
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/lib/codemirror.css"> 
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/hint/show-hint.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/theme/eclipse.css">   
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/dialog/dialog.css">
+        <link rel="stylesheet" href="<%=contextPath%>/static/plugins/codemirror/addon/lint/lint.css">         
 -->
         <!-- Tabulator -->
-        <link href="/static/plugins/tabulator/css/tabulator.min.css" rel="stylesheet">
-        <link href="/static/plugins/tabulator/css/bootstrap/tabulator_bootstrap.min.css" rel="stylesheet">
+        <link href="<%=contextPath%>/static/plugins/tabulator/css/tabulator.min.css" rel="stylesheet">
+        <link href="<%=contextPath%>/static/plugins/tabulator/css/bootstrap/tabulator_bootstrap.min.css" rel="stylesheet">
 
         <style type="text/css">
             .CodeMirror {border: 1px solid black; font-size:13px}
@@ -174,17 +175,16 @@
         </style>        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     </head>
-    <body class="skin-green sidebar-mini">
+    <body class="<%=eng.getConfigData().getString("appSkin","skin-green")%> sidebar-mini">
         <div class="wrapper">
-
             <header class="main-header">
                 <!-- Logo -->
-                <a href="/admin/" class="logo">
+                <a href="<%=contextPath%>/admin/" class="logo">
                     <!--<img src="/img/cloudino.svg" width="170">-->
                     <!-- mini logo for sidebar mini 50x50 pixels 
                     <span class="logo-mini"><i class="fa fa-cloud"></i></span>-->
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><img style="background-color: white; border-radius: 50%; padding: 2px; width: 35px" src="/admin/img/logo2.png" width="30"> <b><%=eng.getAppName()%></b></span>
+                    <span class="logo-lg"><img style="background-color: white; border-radius: 50%; padding: 2px; width: 35px" src="<%=contextPath%>/admin/img/logo2.png" width="30"> <b><%=eng.getAppName()%></b></span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -206,13 +206,13 @@
                             </li>                             
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="/admin/img/user.jpg" class="user-image" alt="User Image"/>
+                                    <img src="<%=contextPath%>/admin/img/user.jpg" class="user-image" alt="User Image"/>
                                     <span class="hidden-xs"><%=user.getString("fullname")%></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="/admin/img/user.jpg" class="img-circle" alt="User Image" />
+                                        <img src="<%=contextPath%>/admin/img/user.jpg" class="img-circle" alt="User Image" />
                                         <p>
                                             <%=user.getString("fullname")%>
                                             <small>Miembro desde: <%=user.getDateFormated("created",new Date(),"d MMMM yyyy")%></small>
@@ -233,10 +233,10 @@
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="/admin/profile" data-history="#profile" class="btn btn-default btn-flat" data-target=".content-wrapper" data-load="ajax">Perfil</a>
+                                            <a href="<%=contextPath%>/admin/profile" data-history="#profile" class="btn btn-default btn-flat" data-target=".content-wrapper" data-load="ajax">Perfil</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="/login?logout=true" class="btn btn-default btn-flat">Salir</a>
+                                            <a href="<%=contextPath%>/login?logout=true" class="btn btn-default btn-flat">Salir</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -271,13 +271,13 @@
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 0.1
                 </div>
-                <strong>Copyright &copy; 2015-2020 <a href="http://cloudino.io"><%=eng.getAppName()%></a>.</strong> All rights reserved.
+                <strong>Copyright &copy; 2015-2020 <a href="<%=eng.getConfigData().getString("appURL","#")%>"><%=eng.getAppName()%></a>.</strong> All rights reserved.
             </footer>
 
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
             <%if(eng.hasUserRole("prog")){%>
-            <aside class="control-sidebar control-sidebar-dark">
+            <aside class="control-sidebar control-sidebar<%=(eng.getConfigData().getString("appSkin","skin-green").endsWith("-light")?"":"-dark")%>">
                 <!-- Create the tabs -->
                 <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                     <!--<li class="active"><a href="#prgmmer" data-toggle="tab"><i class="fa fa-home"></i> Programador</a></li>-->
@@ -299,40 +299,38 @@
         </div><!-- ./wrapper -->
 
         <!-- jQuery 2.1.4 -->
-        <script src="/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/jquery/dist/jquery.min.js"></script>
         
         <!-- Bootstrap 3.3.2 JS -->
-        <script src="/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>  
+        <script src="<%=contextPath%>/static/admin/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>  
         <!-- PACE -->
-        <script src="/static/admin/bower_components/PACE/pace.min.js"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/PACE/pace.min.js"></script>
         
         <!-- DataTables -->
-        <script src="/static/admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="/static/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
         <!-- jQuery Knob Chart -->
-        <script src="/static/admin/bower_components/jquery-knob/dist/jquery.knob.min.js" type="text/javascript"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/jquery-knob/dist/jquery.knob.min.js" type="text/javascript"></script>
 
         <!-- AdminLTE App -->
-        <script src="/static/admin/dist/js/adminlte.min.js" type="text/javascript"></script>  
+        <script src="<%=contextPath%>/static/admin/dist/js/adminlte.min.js" type="text/javascript"></script>  
         
-        <script src="/static/plugins/validator/validator.min.js" type="text/javascript"></script>
-        <script src="/static/plugins/bootstrap-switch/bootstrap-switch.min.js" type="text/javascript"></script>  
-        <script src="/static/plugins/fontawesome-iconpicker-1.3.1/js/fontawesome-iconpicker.min.js" type="text/javascript"></script>  
+        <script src="<%=contextPath%>/static/plugins/validator/validator.min.js" type="text/javascript"></script>
+        <script src="<%=contextPath%>/static/plugins/bootstrap-switch/bootstrap-switch.min.js" type="text/javascript"></script>  
+        <script src="<%=contextPath%>/static/plugins/fontawesome-iconpicker-1.3.1/js/fontawesome-iconpicker.min.js" type="text/javascript"></script>  
         <!-- iCheck -->
-        <script src="/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+        <script src="<%=contextPath%>/static/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
         
-        <script src="/static/admin/bower_components/bootstrap-waitingfor/build/bootstrap-waitingfor.js"></script>
+        <script src="<%=contextPath%>/static/admin/bower_components/bootstrap-waitingfor/build/bootstrap-waitingfor.js"></script>
 
         <!--        
                 <script src="/js/fileinput.min.js"></script>
                 <script src="/static/admin/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js" type="text/javascript"></script>
                 <script src="/static/admin/bower_components/moment/min/moment.min.js"></script>        
                 <script src="/static/admin/bower_components/chart.js/Chart.min.js"></script>        
-                
-                <script type="text/javascript" src="/admin/js/websockets.js"></script>
         -->
-        <script src="/admin/js/admin_utils.js"></script>
+        <script src="<%=contextPath%>/admin/js/admin_utils.js"></script>
         <script type="text/javascript">
             $(document).ajaxStart(function () {Pace.restart()});
             $(document).ready(function(){
@@ -348,7 +346,7 @@
                     //$("#preview").contentWindow.focus();
             });            
         </script>                 
-        <script src="/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>  
+        <script src="<%=contextPath%>/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>  
         
         <!-- Tabulator 
         <script type="text/javascript" src="/static/plugins/tabulator/js/tabulator.min.js"></script>        
@@ -371,7 +369,7 @@
                 //document.write("token:"+token);
                 if(token)
                 {
-                    $.get("/login?token="+token);
+                    $.get("<%=contextPath%>/login?token="+token);
                 }
             }
         </script>

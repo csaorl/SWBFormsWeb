@@ -2,7 +2,8 @@
     Document   : prog_menu
     Created on : 10-feb-2018, 19:57:02
     Author     : javiersolis
---%><%@page import="java.net.URLEncoder"%>
+--%><%@page import="java.util.HashMap"%>
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.net.URL"%>
 <%@page import="java.util.Map"%>
 <%@page import="org.semanticwb.datamanager.script.ScriptObject"%>
@@ -144,6 +145,7 @@
             if("sc_form".equals(type))path="admin_content?pid="+obj.getNumId();
             if("iframe_content".equals(type))path="admin_content?pid="+obj.getNumId();
             if("ajax_content".equals(type))path="admin_content?pid="+obj.getNumId();            
+            if("process_tray".equals(type))path="admin_content?pid="+obj.getNumId();            
             
             if(type!=null && !type.equals("head"))
             {
@@ -160,6 +162,7 @@
     }
 
 %><%
+    String contextPath = request.getContextPath();
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);
     DataObject user=eng.getUser();
     
@@ -171,7 +174,8 @@
     String rid=request.getParameter("rid");    
     
     //Find extra parameters
-    Map<String,String[]> pmap=request.getParameterMap();
+    Map<String,String[]> pmap=new HashMap();
+    pmap.putAll(request.getParameterMap());    
     pmap.remove("pid");
     pmap.remove("iframe");
     pmap.remove("aiframe");
@@ -209,6 +213,9 @@
         String sid[]=id.split(":");
         if(sid.length==4)_path=_path.replace("{ID}", sid[3]);    
     }
+    
+    //add context
+    _path=_path.startsWith("/")?contextPath+_path:_path;
 
     if(!eng.hasUserAnyRole(obj.getDataList("roles_view")))
     {
@@ -235,6 +242,11 @@
 %>
         <iframe class="ifram_content <%=pid%>" src="<%=_fileName%>?pid=<%=pid%>&iframe=true&rid=<%=id%>" frameborder="0" width="100%"></iframe>
 <%
+        }else if("process_tray".equals(type))
+        {
+%>
+        <iframe class="ifram_content <%=pid%>" src="<%=_fileName%>?pid=<%=pid%>&iframe=true<%=(rid!=null)?("&rid="+rid):""%>&id=<%=id%>" frameborder="0" width="100%"></iframe>
+<%
         }else if("iframe_content".equals(type))
         {
 %>
@@ -257,7 +269,11 @@
     
     StringBuilder fields;
     DataList extProps;
-    if(id==null)
+    if("process_tray".equals(type))
+    {
+        extProps=getExtProps(obj,"gridExtProps",eng);
+        fields=getFields(obj, "gridProps", extProps, eng);
+    }else if(id==null)
     {
         extProps=getExtProps(obj,"gridExtProps",eng);
         fields=getFields(obj, "gridProps", extProps, eng);
@@ -278,7 +294,7 @@
         <small><%=_smallName%></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="/admin"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="<%=contextPath%>/admin"><i class="fa fa-home"></i>Home</a></li>
         <%=getParentPath(obj,eng)%>
         <li class="active"><a href="<%=_fileName%>?pid=<%=obj.getNumId()%>" data-history="#<%=obj.getNumId()%>" data-target=".content-wrapper" data-load="ajax"><%=_title%></a></li>
 <%
@@ -327,6 +343,19 @@
     <script type="text/javascript">
         $(window).resize();
     </script>                        
+<%
+            }else if("process_tray".equals(type))
+            {
+%>
+    <script type="text/javascript">
+        loadContent("admin_process_tray?pid=<%=pid%><%=extp%>","#content");
+    </script>  
+<!--    
+    <iframe class="ifram_content <%=pid%>" src="<%=_fileName%>?pid=<%=pid%>&iframe=true<%=extp%>" frameborder="0" width="100%"></iframe>
+    <script type="text/javascript">
+        $(window).resize();
+    </script>    
+-->
 <%
             }
 %>
@@ -415,16 +444,69 @@
         <title><%=_title%></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
-        <link href="/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
+        <script src="<%=contextPath%>/platform/js/eng.js?id=<%=eng.getId()%>" type="text/javascript"></script>
+        <link href="<%=contextPath%>/admin/css/sc_admin.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <script type="text/javascript">
             eng.initPlatform("/admin/ds/datasources.js", <%=eng.getDSCache()%>);
         </script>
         <script type="text/javascript">
-<%        
-        if(id==null)
+<%  
+        if("process_tray".equals(type))
+        {
+            SWBProcess proc=eng.getProcessMgr().getProcess(obj.getString("process"));
+            DataObject initTransition=proc.getUserInitTransition(eng);
+%>             
+            var grid=eng.createGrid({
+                autoResize: true,
+                resizeHeightMargin: 20,
+                resizeWidthMargin: 15,
+                canEdit: false,
+                canAdd: <%=initTransition!=null%>,
+                canRemove: false,
+                showFilter: true,         
+                <%=getProps(extProps,request,user)%>
+<%
+            if(rid!=null)
+            {
+                DataObject pobj=eng.getDataSource("Page").getObjectById(obj.getString("parentId"));
+                String psds=pobj.getString("ds");
+                String sds=obj.getString("ds");
+                Iterator<ScriptObject> it=eng.getDataSource(sds).findScriptFields("dataSource", psds).iterator();
+                String name=null;
+                String value=rid;
+                if (it.hasNext()) {
+                    ScriptObject field = it.next();
+                    name=field.getString("name");
+                    String valueField=field.getString("valueField");
+                    if(valueField!=null)
+                    {
+                        value=eng.getDataSource(psds).getObjectById(rid,DataObject.EMPTY).getString(valueField);
+                    }
+                }
+                if(name!=null)
+                {
+                    out.println("                initialCriteria: {'"+name+"':'"+value+"'}, ");
+                }
+            }
+%>            
+                recordDoubleClick: function(grid, record)
+                {
+                    parent.loadContent("admin_process?itrn=&pid=<%=pid%>&id="+ record["_id"],".content-wrapper");
+                    return false;
+                },
+                addButtonClick: function(event)
+                {
+                    parent.loadContent("admin_process?itrn=<%=initTransition!=null?initTransition.getNumId():""%>&pid=<%=pid%>",".content-wrapper");
+                    return false;
+                },                                 
+                fields: [<%=fields%>]           
+            }, "<%=_ds%>");
+            
+            <%=parseScript(obj.getString("processAddiJS"),request,user)%>            
+<%            
+        }else if(id==null)
         {
             //********************************** Grid ************************************************************
 %>            
@@ -445,13 +527,19 @@
                 String sds=obj.getString("ds");
                 Iterator<ScriptObject> it=eng.getDataSource(sds).findScriptFields("dataSource", psds).iterator();
                 String name=null;
+                String value=rid;
                 if (it.hasNext()) {
                     ScriptObject field = it.next();
                     name=field.getString("name");
+                    String valueField=field.getString("valueField");
+                    if(valueField!=null)
+                    {
+                        value=eng.getDataSource(psds).getObjectById(rid,DataObject.EMPTY).getString(valueField);
+                    }
                 }
                 if(name!=null)
                 {
-                    out.println("                initialCriteria: {'"+name+"':'"+rid+"'}, ");
+                    out.println("                initialCriteria: {'"+name+"':'"+value+"'}, ");
                 }
             }
             if("sc_grid_detail".equals(type))
@@ -471,7 +559,7 @@
                         var content=isc.HTMLFlow.create({
                             width:32,
                             height:16,
-                            contents:"<img style=\"cursor: pointer; padding: 5px 11px;\" width=\"16\" height=\"16\" src=\"/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
+                            contents:"<img style=\"cursor: pointer; padding: 5px 11px;\" width=\"16\" height=\"16\" src=\"<%=contextPath%>/platform/isomorphic/skins/Tahoe/images/actions/edit.png\">", 
                             //dynamicContents:false,
                             click: function () {
                                 parent.loadContent("<%=_fileName%>?pid=<%=pid%>&id=" + record["_id"],".content-wrapper");
