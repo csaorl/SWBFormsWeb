@@ -118,6 +118,7 @@
     {
         eng.setDisabledDataTransforms(false);
     }
+    eng.reloadAllScriptEngines();
 %>            
         </pre>        
     </body>
