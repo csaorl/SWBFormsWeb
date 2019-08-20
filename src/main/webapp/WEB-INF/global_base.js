@@ -1,5 +1,5 @@
-var _modelid = "SWBForms";
-var _dataStore = "mongodb";
+var _modelid = java.lang.System.getProperty("_modelid","SWBForms");
+var _dataStore = java.lang.System.getProperty("_dataStore","mongodb");
 
 //******* Validations ************
 eng.validators["unique"] = {type: "isUnique", errorMessage: "El valor del campo debe de ser único"};
