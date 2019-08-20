@@ -2264,7 +2264,8 @@ var eng = {
                 Page.setEvent("load",function(){
                     //isc.Canvas.resizeFonts(3);                        
                 });
-                Time.setDefaultDisplayTimezone("-06:00");
+                var off=new Date().getTimezoneOffset()/-60;
+                Time.setDefaultDisplayTimezone((off<0?"-":"+")+(Math.abs(off)>9?Math.abs(off):"0")+Math.abs(off)+":00");
                 Time.adjustForDST=false;
                 NumberUtil.decimalSymbol=".";
                 NumberUtil.groupingSymbol=",";              
