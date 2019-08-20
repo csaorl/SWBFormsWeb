@@ -144,9 +144,11 @@
                     {name: "id"},
                     {name: "description"},
                     {name: "dataSource"},
-                    {name: "time", defaultValue:10},
-                    {name: "unit", defaultValue:"m"},     
-                    {name: "active", width:50},                    
+                    {name: "first_time", defaultValue: 1},
+                    {name: "first_unit", defaultValue: "m"},     
+                    {name: "time", defaultValue: 10},
+                    {name: "unit", defaultValue: "m"},     
+                    {name: "active", width: 50},                    
                     //{name: "service"},
                     //{name: "created"},
                     //{name: "creator"},
@@ -224,12 +226,14 @@
                     {name: "description", stype:"text"},
                     {name: "scriptEngine"},
                     {name: "dataSource"},
+                    {name: "first_time"},
+                    {name: "first_unit"},     
                     {name: "time"},
                     {name: "unit"},     
                     {name: "active", width:50},                    
-                    {name: "start", height:300},
-                    {name: "extract", height:300},
-                    {name: "stop", height:300},
+                    {name: "start", height:150},
+                    {name: "extract", height:500},
+                    {name: "stop", height:150},
 <%if(!add){%>                    
                     {name: "created"},
                     {name: "creator"},
@@ -261,6 +265,7 @@
                         gutters: ["CodeMirror-lint-markers"],
                         lint: true,
                     }); 
+                    CM1.setSize(null, 150);
                     
                     var CM2 = CodeMirror.fromTextArea(ele2, {
                         mode: "text/javascript",                            
@@ -276,6 +281,7 @@
                         gutters: ["CodeMirror-lint-markers"],
                         lint: true,
                     }); 
+                    CM2.setSize(null, 500);
                     
                     var CM3 = CodeMirror.fromTextArea(ele3, {
                         mode: "text/javascript",                            
@@ -290,7 +296,8 @@
                         matchTags: {bothTags: true},                  
                         gutters: ["CodeMirror-lint-markers"],
                         lint: true,
-                    });                     
+                    });          
+                    CM3.setSize(null, 150);
                     
                     CM1.on('blur',function(cm){
                         // get value right from instance

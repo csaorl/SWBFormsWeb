@@ -29,7 +29,7 @@
             String s=(String)it.next();
             String k=s.trim();
             if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("\"") && k.endsWith("\"")))k=k.substring(1,k.length()-1);
-            String replace=user.getString(k);
+            String replace=user.getString(k,"");
             txt=txt.replace("{$user:"+s+"}", replace);
         }
         return txt;
@@ -105,18 +105,31 @@
         return value;
     }
 
-    String getValue(DataObject rec, DataObject prop, SWBScriptEngine eng)
+    String getValue(DataObject rec, DataObject prop, SWBScriptEngine eng) throws IOException
     {
         String value=rec.getString(prop.getString("name"));
         if("select".equals(prop.getString("stype")))
         {
             SWBDataSource ds=eng.getDataSource(prop.getString("dataSource"));
             String displayField=ds.getDataSourceScript().getString("displayField");
-            if(displayField!=null)
+            String valueField=prop.getString("valueField");
+
+            System.out.println("value:"+value);
+            System.out.println("ds:"+ds);            
+            System.out.println("displayField:"+displayField);
+
+            if(displayField!=null && (valueField==null || (valueField!=null && !valueField.equals(displayField))))
             {
-                DataObject ref=ds.getObjectById(value,DataObject.EMPTY);
+                DataObject cache=prop.getDataObject("_cache_");
+                if(cache==null)
+                {
+                    cache=ds.mapByField(valueField!=null?valueField:"_id");
+                    prop.addParam("_cache_", cache);
+                }
+                DataObject ref=cache.getDataObject(value,DataObject.EMPTY);
                 value=ref.getString(displayField);
             }
+            System.out.println("value2:"+value);
         }
         if(value==null)value="_";
         return value;
@@ -127,13 +140,17 @@
     String contextPath = request.getContextPath();
     SWBScriptEngine eng=DataMgr.initPlatform("/admin/ds/admin.js", session);
     DataObject user=eng.getUser();
+    System.out.println("user:"+user);
     
     String pid=request.getParameter("pid");
     DataObject opage=eng.getDataSource("Page").getObjectByNumId(pid);   
     
     SWBProcess process=eng.getProcessMgr().getProcess(opage.getString("process"));
-    String ds=opage.getString("ds");    
-    DataObject initTransition=process.getInitTransition();
+    System.out.println("process:"+process);
+    String ds=opage.getString("ds"); 
+    System.out.println("ds:"+ds);
+    DataObject initTransition=process.getUserInitTransition(eng);
+    
 %>
 <style>
     #processTable thead {

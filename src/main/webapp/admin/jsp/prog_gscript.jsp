@@ -227,7 +227,7 @@
                     {name: "scriptEngine"},
                     {name: "order"},
                     {name: "active", width:50},
-                    {name: "script", height:300},
+                    {name: "script", height:600},
 <%if(!add){%>                    
                     {name: "created"},
                     {name: "creator"},
@@ -255,6 +255,7 @@
                         gutters: ["CodeMirror-lint-markers"],
                         lint: true,
                     }); 
+                    myCodeMirror.setSize(null, 600);
                     
                     myCodeMirror.on('blur',function(cm){
                         // get value right from instance

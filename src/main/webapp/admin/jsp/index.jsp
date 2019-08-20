@@ -265,7 +265,6 @@
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <%@include file="home.jsp"%>
             </div><!-- /.content-wrapper -->
             <footer class="main-footer hidden-xs">
                 <div class="pull-right hidden-xs">
@@ -344,6 +343,8 @@
                     }
                     $(window).resize(function(){ fix_height(); });
                     //$("#preview").contentWindow.focus();
+                    
+                    loadContent("home",".content-wrapper");
             });            
         </script>                 
         <script src="<%=contextPath%>/static/plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>  

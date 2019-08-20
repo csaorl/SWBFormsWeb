@@ -25,7 +25,7 @@
                 String _id = it.next();
                 String name=_id.substring(_id.indexOf(".")+1);
                 //String name=eng.getDataSource("DataSourceFields").getObjectById(_id,DataObject.EMPTY).getString("title",_id);
-                fields.append(map.getDataObject(name).getString("title","-"));
+                fields.append(map.getDataObject(name,DataObject.EMPTY).getString("title","-"));
                 if(it.hasNext())fields.append(";");
             }
         }else

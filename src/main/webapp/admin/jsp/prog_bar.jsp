@@ -70,6 +70,7 @@
                 <li><a href="prog_vm" data-history="#prog_vm" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>ValueMaps</a></li>
                 <li><a href="prog_valid" data-history="#prog_valid" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Validators</a></li>
                 <li><a href="prog_gscript" data-history="#prog_gscript" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>GlobalScripts</a></li>
+                <li><a href="prog_jsconsole" data-history="#prog_jsconsole" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>JavaScript Console</a></li>
                 <li><a href="prog_dproc" data-history="#prog_dproc" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataProcessors</a></li>
                 <li><a href="prog_dsrv" data-history="#prog_dsrv" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataServices</a></li>
                 <li><a href="prog_dext" data-history="#prog_dext" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>DataExtractors</a></li>
@@ -122,11 +123,9 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="prog_impJSON" data-history="#prog_impJSON" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Import JSON Data</a></li>
-            </ul>                    
-            <ul class="treeview-menu">
                 <li><a href="prog_export" data-history="#prog_export" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>Export Data</a></li>
-            </ul>                    
-            
+                <li><a href="JDBCImporter?ajax=true" data-history="#JDBCImporter" data-target=".content-wrapper" data-load="ajax"><i class="fa fa-gear"></i>JDBC Importer</a></li>
+            </ul>                                
             <a href="#">
                 <i class="fa fa-wrench"></i>
                 <span>Files</span>

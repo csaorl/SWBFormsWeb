@@ -203,12 +203,12 @@
                     {name: "name"},
                     {name: "title"},
                     {name: "type"},        
+                    {name: "length", width:100},        
                     {name: "description", length: 500},        
                     {name: "example"},        
                     {name: "required"},
                     {name: "order", width:70},
                 ],
-                        
                 getExpansionComponent : function (record) 
                 {
                     var grd=eng.createGrid({

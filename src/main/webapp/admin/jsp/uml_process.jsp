@@ -104,13 +104,13 @@
         data.append("\\n");
         data.append("[<hidden>_start_]"+"\\n");
 
-        System.out.println("Step 0");
+        //System.out.println("Step 0");
 
         DataObject roles=(DataObject)DataUtils.toData(eng.eval("roles"));
         DataObject stypes=(DataObject)DataUtils.toData(eng.eval("stype_transitions"));   
         DataObject ptypes=(DataObject)DataUtils.toData(eng.eval("ptype_transitions"));  
 
-        System.out.println("Step 1");
+        //System.out.println("Step 1");
         
         DataObject query=new DataObject();
         query.addSubObject("data").addParam("process", obj.getId());
@@ -133,7 +133,7 @@
             data.append(sobj.getString("name")+"]\\n");
         }
 
-        System.out.println("Step 2");
+        //System.out.println("Step 2");
 
         query=new DataObject();
         query.addSubObject("data").addParam("process", obj.getId());
@@ -145,7 +145,7 @@
 
             data.append("[<frame> "+getTransitionName(trans,roles,!doc));
 
-            System.out.println("Step 2.1");
+            //System.out.println("Step 2.1");
 
             if(doc)
             {
@@ -166,7 +166,7 @@
                     data.append(stypes.getString(type)+"\\n");
                 }
 
-                System.out.println("Step 2.2");
+                //System.out.println("Step 2.2");
 
                 String ptype=trans.getString("ptype","");        
                 if(ptype.startsWith("sc_grid"))
@@ -182,7 +182,7 @@
                     }
                 }            
 
-                System.out.println("Step 2.3");
+                //System.out.println("Step 2.3");
 
                 if(ptype.equals("sc_grid_detail") || ptype.equals("sc_form"))
                 {
@@ -203,7 +203,7 @@
 
         }
 
-        System.out.println("Step 3");
+        //System.out.println("Step 3");
 
 
         DataObject ini=transitions.getDataObject(obj.getString("initTransition"));
@@ -212,7 +212,7 @@
             data.append("[_start_]--:>["+getTransitionName(ini,roles,!doc)+"]"+"\\n");
         }
 
-        System.out.println("Step 4");
+        //System.out.println("Step 4");
 
         it=transitions.values().iterator();
         while (it.hasNext()) {
@@ -253,7 +253,7 @@
 
         }
 
-        System.out.println("Step 5");
+        //System.out.println("Step 5");
 
         return data.toString();
     }

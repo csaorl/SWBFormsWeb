@@ -17,9 +17,11 @@ var type_pages = {
 //Tipos de links, objetos vinculados a formas
 //stype: subForm, tab
 
+var vm_time_units={"ms":"Milisegundos","s":"Segundos","m":"Minutos","h":"Horas","d":"Dias","w":"Semanas","M":"Meses","y":"Años"};
+
 var ds_dataSources=[];
 
-var ds_field_types = ["boolean","date","double","float","header","int","long","password","section","select","string","time"];
+var ds_field_types = ["boolean","date","datetime","double","float","header","int","long","password","section","select","string","time"];
 
 var ds_field_atts_types = ["boolean","date","double","float","int","long","password","select","string","object","time"];
 
@@ -130,6 +132,7 @@ eng.dataSources["DataSourceFields"] = {
         {name: "name", title: "Identificador", type: "string", validators: [{stype: "id"}]},
         {name: "title", title: "Título", type: "string"},
         {name: "type", title: "Tipo", type: "selectOther", valueMap:ds_field_types},    
+        {name: "length", title: "Longitud", type: "int"},    
         {name: "description", title: "Descripción", type: "string"},    
         {name: "example", title: "Ejemplo", type: "string"},            
         {name: "order", title: "Orden", type: "int"},        
@@ -389,8 +392,10 @@ eng.dataSources["DataExtractor"] = {
         {name: "start", title: "Start", stype: "text"},
         {name: "extract", title: "Extract", stype: "text"},
         {name: "stop", title: "Stop", stype: "text"},
-        {name: "time", title: "Time", type: "int"},
-        {name: "unit", title: "Unit", type: "select", valueMap:{"ms":"Milliseconds","s":"Seconds","m":"Minutes","h":"Hours","d":"days"}},        
+        {name: "first_time", title: "Tiempo Inical", type: "int"},
+        {name: "first_unit", title: "Unidad Inical", type: "select", valueMap:vm_time_units},        
+        {name: "time", title: "Tiempo", required:true, type: "int"},
+        {name: "unit", title: "Unidad", required:true, type: "select", valueMap:vm_time_units},        
         {name: "active", title: "Active", type:"boolean"},
         {name: "created", title: "Fecha de Registro", type: "date", editorType: "StaticTextItem", canEdit: false},
         {name: "creator", title: "Usuario Creador", type: "string", editorType: "StaticTextItem", canEdit: false},
@@ -569,6 +574,9 @@ var stype_transitions = {
     "timer":"Tiempo"
 };
 
+var vm_proc_time_units={"m":"Minutos","h":"Horas","d":"Dias","w":"Semanas","M":"Meses","y":"Años"};
+
+
 eng.dataSources["SWBF_Process"] = {
     scls: "SWBF_Process",
     modelid: _modelid,
@@ -730,6 +738,11 @@ eng.dataSources["SWBF_Transition"] = {
         {name: "roles_update", title: "Roles de Edición", type: "select", multiple:true, valueMap:roles},
         {name: "roles_remove", title: "Roles de Eliminación", type: "select", multiple:true, valueMap:roles},  
         
+        //Time properties
+        {name: "time", title: "Time", type: "int"},
+        {name: "unit", title: "Unit", type: "select", valueMap:vm_proc_time_units},        
+        
+        
         //Log properties
         {name: "created", title: "Fecha de Registro", type: "date", editorType: "StaticTextItem", canEdit: false},
         {name: "creator", title: "Usuario Creador", type: "string", editorType: "StaticTextItem", canEdit: false},
@@ -812,3 +825,14 @@ eng.dataServices["SWBF_ProcessService"] = {
         }        
     }
 };
+
+eng.dataServices["SWBF_ProcessCacheService"] = {
+    dataSources: ["SWBF_Process","SWBF_State","SWBF_Transition","SWBF_TransitionStates"],
+    actions: ["add", "update", "remove"],
+    service: function(request, response, dataSource, action, trxParams)
+    {                    
+        this.getProcessMgr().clearCache();
+    }
+};
+
+        

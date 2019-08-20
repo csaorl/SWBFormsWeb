@@ -30,7 +30,7 @@
             String s=(String)it.next();
             String k=s.trim();
             if((k.startsWith("'") && k.endsWith("'")) || (k.startsWith("\"") && k.endsWith("\"")))k=k.substring(1,k.length()-1);
-            String replace=user.getString(k);
+            String replace=user.getString(k,"");
             txt=txt.replace("{$user:"+s+"}", replace);
         }
         return txt;
@@ -87,8 +87,10 @@
                 String _id = it.next();
                 String name=_id.substring(_id.indexOf(".")+1);
                 //System.out.println(_id);
-                fields.append("{");
-                fields.append("name:"+"\""+name+"\"");
+                boolean add=true;
+                StringBuilder row=new StringBuilder();
+                row.append("{");
+                row.append("name:"+"\""+name+"\"");
                 for(int i=0;i<extProps.size();i++)
                 {
                     DataObject ext=extProps.getDataObject(i);
@@ -98,28 +100,30 @@
                         if(att.equals("canEditRoles")) {
                             //System.out.println("canEditRoles:"+ext.getString("value"));
                             boolean enabled = eng.hasUserAnyRole(ext.getString("value").split(","));
-                            fields.append(", disabled:"+!enabled);
+                            row.append(", disabled:"+!enabled);
                         }else if(att.equals("canViewRoles")) {
                             boolean visible = eng.hasUserAnyRole(ext.getString("value").split(","));
-                            fields.append(", visible:"+visible);
+                            row.append(", visible:"+visible);
+                            add=visible;
                         }else {
                             // original
                             String value=ext.getString("value");
                             String type=ext.getString("type");
-                            fields.append(", "+att+":");
+                            row.append(", "+att+":");
                             if("string".equals(type) || "date".equals(type))
                             {
-                                fields.append("\""+value+"\"");
+                                row.append("\""+value+"\"");
                             }else
                             {
-                                fields.append(value);
+                                row.append(value);
                             }
                             // fin. original
                         }
                     }
                 }
-                fields.append("}");
-                if(it.hasNext())fields.append(",");
+                row.append("}");
+                if(it.hasNext())row.append(",");
+                if(add)fields.append(row);
                 fields.append("\n");
             }
         }    
