@@ -594,7 +594,7 @@ eng.fieldProcesors["file"] = function(field)
             for(var i=0;i<value.length;i++)
             {
                 var f=value[i];
-                ret+="<a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/fd/" + f.id + "/"+f.name+"\">"+f.name;
+                ret+="<a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/"+ eng.contextPath + "fd/" + f.id + "/"+f.name+"\">"+f.name;
                 if(f.percent)ret+=" ("+f.percent+"%)";
                 ret+="</a>";
                 if(i<value.length-1)ret+=", ";
@@ -1255,9 +1255,9 @@ isc.FileUpload.addProperties({
                     var p=100;
                     if(dataValue[i].percent)p=dataValue[i].percent;
                     
-                    content += "        <span><a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\"/fd/" + dataValue[i].id + "/"+encodeURI(dataValue[i].name)+"\">" + dataValue[i].name + "</a>";
+                    content += "        <span><a style=\"color: #404040;text-decoration: none;\" target=\"_new\" href=\""+ eng.contextPath + "/fd/" + dataValue[i].id + "/"+encodeURI(dataValue[i].name)+"\">" + dataValue[i].name + "</a>";
                     if(p<100)content+=" ("+p+")";
-                    if(this.isEditable())content += "<img style=\"margin-left: 2px; cursor: pointer; vertical-align: middle;\" onClick=\"" + this.ID + ".remove('"+dataValue[i].id+"');\" src=\"/platform/isomorphic/skins/Tahoe/images/actions/close.png\"/>";
+                    if(this.isEditable())content += "<img style=\"margin-left: 2px; cursor: pointer; vertical-align: middle;\" onClick=\"" + this.ID + ".remove('"+dataValue[i].id+"');\" src=\"" + eng.contextPath + "/platform/isomorphic/skins/Tahoe/images/actions/close.png\"/>";
                     if(i<dataValue.length-1)content+=",";
                     content += "        </span>";
                     
@@ -1304,9 +1304,9 @@ isc.FileUpload.addProperties({
                 runtimes : 'html5,flash,silverlight,html4',
                 browse_button : this.ID + "_button", // you can pass in id...
                 container: this.ID + "_container", // ... or DOM Element itself
-                url : '/platform/jsp/plupload.jsp',
-                flash_swf_url : '/platform/plupload/js/Moxie.swf',
-                silverlight_xap_url : '/platform/pluploadjs/Moxie.xap',
+                url : eng.contextPath + '/platform/jsp/plupload.jsp',
+                flash_swf_url : eng.contextPath + '/platform/plupload/js/Moxie.swf',
+                silverlight_xap_url : eng.contextPath + '/platform/pluploadjs/Moxie.xap',
                 chunk_size: '4mb',
                 //max_file_size : '10mb',
                 unique_names: true,
@@ -1519,14 +1519,14 @@ isc.GridSelectItem.addProperties({
         var c=isc.HStack.create({membersMargin:10, width:this.width, height:this.height, autoDraw:false, members:[
             grid1,
             isc.VStack.create({width:"32", height:74, layoutAlign:"center", membersMargin:10, autoDraw:false, members:[
-                isc.Img.create({src:"/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_plus.png", autoDraw:false, height:"25px",
+                isc.Img.create({src:eng.contextPath + "/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_plus.png", autoDraw:false, height:"25px",
                     click:function(){
                         grid2.transferSelectedData(grid1);
                         _this.dataValue=grid2.data;
                         _this.storeData();
                     }
                 }),
-                isc.Img.create({src:"/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_minus.png", autoDraw:false, height:"25px",
+                isc.Img.create({src:eng.contextPath + "/platform/isomorphic/skins/Tahoe/images/DynamicForm/unstacked_spinner_minus.png", autoDraw:false, height:"25px",
                     click:function(){
                         grid1.transferSelectedData(grid2);
                         _this.dataValue=grid2.data;
